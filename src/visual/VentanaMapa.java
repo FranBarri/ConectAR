@@ -41,15 +41,18 @@ public class VentanaMapa {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 750, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
 		panelMapa = new JPanel();
-		panelMapa.setBounds(10, 11, 437, 446);
+		panelMapa.setBounds(0, 0, 734, 561);
 		frame.getContentPane().add(panelMapa);
 
 		_mapa = new JMapViewer();
+		_mapa.setBounds(10, 5, 714, 545);
 		_mapa.setDisplayPosition(new Coordinate(-34.521, -58.7008), 15);
+		panelMapa.setLayout(null);
 				
 		panelMapa.add(_mapa);
 
