@@ -15,6 +15,7 @@ import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class VentanaRegistro {
 	
@@ -56,6 +57,8 @@ public class VentanaRegistro {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 900, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null); //Centra la ventana en pantalla
+		frame.setResizable(false);
 		
 		panelGradiente1 = new swing.PanelGradiente();
 		panelRegistro = new swing.PanelBorder();
@@ -65,24 +68,9 @@ public class VentanaRegistro {
         
         panelRegistro.setBackground(new java.awt.Color(255, 255, 255));
         
-        frame.getContentPane().add(panelGradiente1);
+        frame.getContentPane().add(panelGradiente1, BorderLayout.CENTER);
 
         panelGradiente1.setLayer(panelRegistro, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        GroupLayout gl_panelGradiente1 = new GroupLayout(panelGradiente1);
-        gl_panelGradiente1.setHorizontalGroup(
-        	gl_panelGradiente1.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panelGradiente1.createSequentialGroup()
-        			.addGap(324)
-        			.addComponent(panelRegistro, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(330, Short.MAX_VALUE))
-        );
-        gl_panelGradiente1.setVerticalGroup(
-        	gl_panelGradiente1.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panelGradiente1.createSequentialGroup()
-        			.addGap(58)
-        			.addComponent(panelRegistro, GroupLayout.PREFERRED_SIZE, 378, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(125, Short.MAX_VALUE))
-        );
         
         JLabel lblRegistro = new JLabel("Registro");
         lblRegistro.setBounds(0, 23, 230, 37);
@@ -138,9 +126,25 @@ public class VentanaRegistro {
         panelRegistro.add(lblLongitud);
         
         JButton btnRegistrar = new JButton("Registrar");
+        btnRegistrar.setForeground(new Color(255, 255, 255));
+        btnRegistrar.setBackground(new Color(0, 0, 255));
         btnRegistrar.setFont(new Font("Tahoma", Font.BOLD, 14));
         btnRegistrar.setBounds(88, 337, 117, 24);
         panelRegistro.add(btnRegistrar);
+        
+        GroupLayout gl_panelGradiente1 = new GroupLayout(panelGradiente1);
+        gl_panelGradiente1.setHorizontalGroup(
+        	gl_panelGradiente1.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_panelGradiente1.createSequentialGroup()
+        			.addGap(330)
+        			.addComponent(panelRegistro, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE))
+        );
+        gl_panelGradiente1.setVerticalGroup(
+        	gl_panelGradiente1.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_panelGradiente1.createSequentialGroup()
+        			.addGap(100)
+        			.addComponent(panelRegistro, GroupLayout.PREFERRED_SIZE, 380, GroupLayout.PREFERRED_SIZE))
+        );
         panelGradiente1.setLayout(gl_panelGradiente1);
 	}
 }
