@@ -2,6 +2,8 @@ package sistema;
 
 import java.util.*;
 
+import gSon.Localidad;
+
 public class Aplicacion {
     private List<Localidad> localidades;
     private Grafo grafo;

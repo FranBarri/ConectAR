@@ -1,5 +1,7 @@
 package sistema;
 
+import gSon.Localidad;
+
 public class Conexion implements Comparable<Conexion> {
     private Localidad origen;
     private Localidad destino;
