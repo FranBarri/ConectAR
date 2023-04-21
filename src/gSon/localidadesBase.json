@@ -1,0 +1,34 @@
+{
+    "lista": [
+      {
+        "nombre": "Villa de Mayo",
+        "provincia": "Buenos Aires",
+        "latitud": 16.0,
+        "longitud": 200.0
+      },
+      {
+        "nombre": "Polvorines",
+        "provincia":"Buenos Aires",
+        "latitud": 12.0,
+        "longitud": 150
+      },
+      {
+        "nombre": "Torcuato",
+        "provincia": "Buenos Aires",
+        "latitud": 8.0,
+        "longitud": 100.0
+      },
+      {
+        "nombre": "JCP",
+        "provincia": "Buenos Aires",
+        "latitud": 25.0,
+        "longitud": 450.0
+      },
+      {
+        "nombre": "San Miguel",
+        "provincia": "Buenos Aires",
+        "latitud": 20.0,
+        "longitud": 250.0
+      }
+    ]
+  }

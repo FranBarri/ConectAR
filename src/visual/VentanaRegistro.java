@@ -165,7 +165,7 @@ public class VentanaRegistro {
 				if (verificarDatos()) {
 					Localidad local = VentanaRegistroControlador.generarLocalidad(localidad, provincia, latitud, longitud);
 					VentanaRegistroControlador.registrarLocalidad(local);
-					JOptionPane.showMessageDialog(null, "localidad " + local.getNombre() + "añadida!");
+					JOptionPane.showMessageDialog(null, "localidad " + local.getNombre() + " añadida!");
 				}
 			}
 		});	

@@ -1,0 +1,10 @@
+{
+  "lista": [
+    {
+      "nombre": "Villa de Mayo",
+      "provincia": "Buenos Aires",
+      "latitud": 16.0,
+      "longitud": 200.0
+    }
+  ]
+}
