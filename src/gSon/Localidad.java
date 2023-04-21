@@ -7,6 +7,10 @@ public class Localidad {
 	private double longitud;
 
 	public Localidad(String nombre, String provincia, double latitud, double longitud) {
+		if(nombre == "" || nombre == null || provincia == "" || provincia == null || latitud <= 0 || longitud <= 0)
+		{
+			throw new IllegalArgumentException("dato mal cargado.");
+		}
 		this.nombre = nombre;
 		this.provincia = provincia;
 		this.latitud = latitud;

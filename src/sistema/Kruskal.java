@@ -1,3 +1,5 @@
+//como implementar kruskal junto a la clase aristas?
+
 //package sistema;
 //
 //import java.util.ArrayList;
@@ -31,61 +33,6 @@
 //        return arbol;
 //    }
 //}
-
-import java.util.ArrayList;
-import java.util.Collections;
-
-public class Kruskal {
-	private  int[]link;
-	private Grafo graph;
-	private ArrayList<Arista> listEdge;
-	
-	public Kruskal(Grafo g) {
-		graph=g;
-		listEdge= new ArrayList<Arista>();
-		listEdge=g.getAristas();
-	}
-	
-	private void initRoot() {
-		link= new int[graph.Persons()];
-		for (int j = 0; j < link.length; j++) {
-			link[j]=j;
-		}
-	}
-	
-	//Determine if two persons are in the same connected component
-	private int find(int i) {
-		if (i== link[i]) {
-			return i;
-		}
-		return link[i]= find(link[i]);
-	}
-	
-	//Modify the structure of the trees
-	private void union(int i, int j) {
-		int rootI=find(i);
-		int rootJ=find(j);
-		link[rootI]=rootJ;
-	}
-	
-	public Graph minimalGeneratorTree() {
-		Collections.sort(listEdge);
-		ArrayList<Edge> aux=new ArrayList<>();
-		initRoot();
-		int connectedComponent= graph.Persons();
-		int position=0;
-		while ((connectedComponent!=1 && position < graph.cantEdges())) {
-			Edge current= listEdge.get(position);
-			if (find(current.getPerson1().getId())!=find(current.getPerson2().getId())) {
-				union(current.getPerson1().getId(), current.getPerson2().getId());
-				aux.add(current);
-				connectedComponent --;
-			}
-			 position++;
-		}
-		return new Graph(aux, graph.Persons());
-	}
-}
 
 
 //package sistema;
@@ -156,7 +103,7 @@ public class Kruskal {
 //        Arrays.sort(edges, Comparator.comparingInt(e -> e.longitud));
 //        int i = 0;
 //        int e = 0;
-//        while (e < V - 1) {
+//        while (e < V-1) {
 //            Arista edge = edges[i++];
 //            int x = find(subsets, edge.origen);
 //            int y = find(subsets, edge.destino);
@@ -169,3 +116,92 @@ public class Kruskal {
 //        return result;
 //    }
 //}
+
+package sistema;
+
+import java.util.Arrays;
+
+class Kruskal{
+	class Edge implements Comparable<Edge> {
+		public int src, dest, weight;
+
+		public int compareTo(Edge compareEdge) {
+			return this.weight - compareEdge.weight;
+		}
+	};
+
+	class subset
+	{
+		int parent, rank;
+	};
+
+	int V, E;    
+	Edge edge[];
+	public Kruskal(int v, int e)
+	{
+		V = v;
+		E = e;
+		edge = new Edge[E];
+		for (int i=0; i<e; ++i)
+			edge[i] = new Edge();
+	}
+	int find(subset subsets[], int i)
+	{
+		if (subsets[i].parent != i)
+			subsets[i].parent = find(subsets, subsets[i].parent);
+
+		return subsets[i].parent;
+	}
+	void Union(subset subsets[], int x, int y)
+	{
+		int xroot = find(subsets, x);
+		int yroot = find(subsets, y);
+		if (subsets[xroot].rank < subsets[yroot].rank)
+			subsets[xroot].parent = yroot;
+		else if (subsets[xroot].rank > subsets[yroot].rank)
+			subsets[yroot].parent = xroot;
+		else
+		{
+			subsets[yroot].parent = xroot;
+			subsets[xroot].rank++;
+		}
+	}
+	// The main function to construct MST using Kruskal's algorithm
+	void KruskalMST()
+	{
+		Edge result[] = new Edge[V];  
+		int e = 0;  
+		int i = 0; 
+		for (i=0; i<V; ++i)
+			Arrays.sort(edge);
+		subset subsets[] = new subset[V];
+		for(i=0; i<V; ++i)
+			subsets[i]=new subset();
+		for (int v = 0; v < V; ++v)
+		{
+			subsets[v].parent = v;
+			subsets[v].rank = 0;
+		}
+		i = 0; 
+		while (e < V - 1)
+		{
+			Edge next_edge = new Edge();
+			next_edge = edge[i++];
+
+			int x = find(subsets, next_edge.src);
+			int y = find(subsets, next_edge.dest);
+			if (x != y)
+			{
+				result[e++] = next_edge;
+				Union(subsets, x, y);
+			}
+
+		}
+
+		System.out.println("Following are the edges in " + 
+				"the constructed MST");
+		for (i = 0; i < e; ++i)
+			System.out.println(result[i].src+" -- " + 
+					result[i].dest+" == " + result[i].weight);
+	}
+}
