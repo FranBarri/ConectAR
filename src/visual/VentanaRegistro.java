@@ -8,17 +8,28 @@ import swing.PanelBorder;
 import swing.PanelGradiente;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
+import controladores.VentanaRegistroControlador;
+import gSon.Localidad;
+
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
 import java.awt.Font;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
 
 public class VentanaRegistro {
-	
+	private String localidad;
+	private String provincia;
+	private double latitud;
+	private double longitud;
 	private JFrame frame;
 	private PanelGradiente panelGradiente1;
 	private PanelBorder panelRegistro;
@@ -72,17 +83,17 @@ public class VentanaRegistro {
 
         panelGradiente1.setLayer(panelRegistro, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
-        JLabel lblRegistro = new JLabel("Registro");
-        lblRegistro.setBounds(0, 23, 230, 37);
-        lblRegistro.setFont(new Font("Tahoma", Font.BOLD, 30));
-        lblRegistro.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel lblRegistrar = new JLabel("Registrar");
+        lblRegistrar.setBounds(0, 23, 230, 37);
+        lblRegistrar.setFont(new Font("Tahoma", Font.BOLD, 30));
+        lblRegistrar.setHorizontalAlignment(SwingConstants.CENTER);
         
         JLabel lblRegistro1 = new JLabel("Localidad");
         lblRegistro1.setBounds(0, 66, 230, 24);
         lblRegistro1.setHorizontalAlignment(SwingConstants.CENTER);
         lblRegistro1.setFont(new Font("Tahoma", Font.BOLD, 30));
         panelRegistro.setLayout(null);
-        panelRegistro.add(lblRegistro);
+        panelRegistro.add(lblRegistrar);
         panelRegistro.add(lblRegistro1);
         
         usrLocalidad = new JTextField();
@@ -119,7 +130,7 @@ public class VentanaRegistro {
         usrLongitud.setColumns(10);
         usrLongitud.setBounds(24, 280, 181, 24);
         panelRegistro.add(usrLongitud);
-        
+
         JLabel lblLongitud = new JLabel("Longitud");
         lblLongitud.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lblLongitud.setBounds(25, 257, 67, 27);
@@ -146,5 +157,39 @@ public class VentanaRegistro {
         			.addComponent(panelRegistro, GroupLayout.PREFERRED_SIZE, 380, GroupLayout.PREFERRED_SIZE))
         );
         panelGradiente1.setLayout(gl_panelGradiente1);
+        
+		btnRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		        localidad = usrLocalidad.getText();
+		        provincia = usrProvincia.getText();
+				if (verificarDatos()) {
+					Localidad local = VentanaRegistroControlador.generarLocalidad(localidad, provincia, latitud, longitud);
+					VentanaRegistroControlador.registrarLocalidad(local);
+					JOptionPane.showMessageDialog(null, "localidad " + local.getNombre() + "añadida!");
+				}
+			}
+		});	
+	}
+	
+	private boolean verificarDatos() {
+		boolean ret = true;
+		if (localidad.isBlank() || provincia.isBlank()) {
+			ret = false;
+		}
+        try {
+            String latitudS = usrLatitud.getText();
+            latitud = Double.parseDouble(latitudS);
+        } catch (NumberFormatException E) {
+        	ret = false;
+			JOptionPane.showMessageDialog(null, "Ingrese un valor apropiado.");
+        }
+        try {
+            String longitudS = usrLongitud.getText();
+            longitud = Double.parseDouble(longitudS);
+        } catch (NumberFormatException E) {
+        	ret = false;
+			JOptionPane.showMessageDialog(null, "Ingrese un valor apropiado.");
+        }
+        return ret;
 	}
 }

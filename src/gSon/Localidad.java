@@ -1,55 +1,49 @@
 package gSon;
 
 public class Localidad {
-    private String nombre;
-    private String provincia;
-    private double latitud;
-    private double longitud;
-    private int id;
+	private String nombre;
+	private String provincia;
+	private double latitud;
+	private double longitud;
 
-    public Localidad(String nombre, String provincia, double latitud, double longitud,int id) {
-        this.nombre = nombre;
-        this.provincia = provincia;
-        this.latitud = latitud;
-        this.longitud = longitud;
-        this.id= id;
-    }
+	public Localidad(String nombre, String provincia, double latitud, double longitud) {
+		this.nombre = nombre;
+		this.provincia = provincia;
+		this.latitud = latitud;
+		this.longitud = longitud;
+	}
 
-    // Mtodos getter y setter
-    public String getNombre() {
-        return nombre;
-    }
+	// Getters y setters
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public String getProvincia() {
-        return provincia;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
+	public String getProvincia() {
+		return provincia;
+	}
 
-    public double getLatitud() {
-        return latitud;
-    }
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
 
-    public void setLatitud(double latitud) {
-        this.latitud = latitud;
-    }
+	public double getLatitud() {
+		return latitud;
+	}
 
-    public double getLongitud() {
-        return longitud;
-    }
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
+	}
 
-    public void setLongitud(double longitud) {
-        this.longitud = longitud;
-    }
+	public double getLongitud() {
+		return longitud;
+	}
 
-	public int getId() {
-		// TODO Auto-generated method stub
-		return id;
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
 	}
 }
