@@ -1,7 +1,5 @@
 package visual;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 
 import swing.PanelBorder;
@@ -9,6 +7,7 @@ import swing.PanelGradiente;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
+import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
 import gSon.Localidad;
 
@@ -25,51 +24,28 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
 
-public class VentanaRegistro {
+@SuppressWarnings("serial")
+public class VentanaRegistro extends JFrame{
 	private String localidad;
 	private String provincia;
 	private double latitud;
 	private double longitud;
-	private JFrame frame;
 	private PanelGradiente panelGradiente1;
 	private PanelBorder panelRegistro;
 	private JTextField usrLocalidad;
 	private JTextField usrProvincia;
 	private JTextField usrLatitud;
 	private JTextField usrLongitud;
-		
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaRegistro window = new VentanaRegistro();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the application.
-	 */
 	public VentanaRegistro() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 900, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null); //Centra la ventana en pantalla
-		frame.setResizable(false);
+	public void initialize() {
+		setBounds(100, 100, 900, 600);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null); //Centra la ventana en pantalla
+		setResizable(false);
 		
 		panelGradiente1 = new swing.PanelGradiente();
 		panelRegistro = new swing.PanelBorder();
@@ -79,7 +55,7 @@ public class VentanaRegistro {
         
         panelRegistro.setBackground(new java.awt.Color(255, 255, 255));
         
-        frame.getContentPane().add(panelGradiente1, BorderLayout.CENTER);
+        getContentPane().add(panelGradiente1, BorderLayout.CENTER);
 
         panelGradiente1.setLayer(panelRegistro, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
@@ -139,8 +115,8 @@ public class VentanaRegistro {
         JButton btnRegistrar = new JButton("Registrar");
         btnRegistrar.setForeground(new Color(255, 255, 255));
         btnRegistrar.setBackground(new Color(0, 0, 255));
-        btnRegistrar.setFont(new Font("Tahoma", Font.BOLD, 14));
-        btnRegistrar.setBounds(88, 337, 117, 24);
+        btnRegistrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnRegistrar.setBounds(115, 337, 90, 24);
         panelRegistro.add(btnRegistrar);
         
         GroupLayout gl_panelGradiente1 = new GroupLayout(panelGradiente1);
@@ -156,6 +132,13 @@ public class VentanaRegistro {
         			.addGap(100)
         			.addComponent(panelRegistro, GroupLayout.PREFERRED_SIZE, 380, GroupLayout.PREFERRED_SIZE))
         );
+        
+        JButton btnMapa = new JButton("Mapa");
+        btnMapa.setForeground(Color.WHITE);
+        btnMapa.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnMapa.setBackground(Color.BLUE);
+        btnMapa.setBounds(24, 337, 68, 24);
+        panelRegistro.add(btnMapa);
         panelGradiente1.setLayout(gl_panelGradiente1);
         
 		btnRegistrar.addActionListener(new ActionListener() {
@@ -167,7 +150,14 @@ public class VentanaRegistro {
 					VentanaRegistroControlador.registrarLocalidad(local);					
 				}
 			}
-		});	
+		});
+		
+        btnMapa.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+				VentanaMapaControlador.mostrar();
+				dispose();
+			}
+        });
 	}
 	
 	private boolean verificarDatos() {
