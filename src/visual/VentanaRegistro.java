@@ -113,7 +113,7 @@ public class VentanaRegistro extends JFrame{
         panelRegistro.add(lblLongitud);
         
         JButton btnRegistrar = new JButton("Registrar");
-        btnRegistrar.setForeground(new Color(255, 255, 255));
+        btnRegistrar.setForeground(new Color(0, 0, 0));
         btnRegistrar.setBackground(new Color(0, 0, 255));
         btnRegistrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
         btnRegistrar.setBounds(115, 337, 90, 24);
@@ -134,12 +134,14 @@ public class VentanaRegistro extends JFrame{
         );
         
         JButton btnMapa = new JButton("Mapa");
-        btnMapa.setForeground(Color.WHITE);
+        btnMapa.setForeground(new Color(0, 0, 0));
         btnMapa.setFont(new Font("Tahoma", Font.PLAIN, 12));
         btnMapa.setBackground(Color.BLUE);
         btnMapa.setBounds(24, 337, 68, 24);
         panelRegistro.add(btnMapa);
+        
         panelGradiente1.setLayout(gl_panelGradiente1);
+
         
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -147,7 +149,9 @@ public class VentanaRegistro extends JFrame{
 		        provincia = usrProvincia.getText();
 				if (verificarDatos()) {
 					Localidad local = VentanaRegistroControlador.generarLocalidad(localidad, provincia, latitud, longitud);
-					VentanaRegistroControlador.registrarLocalidad(local);					
+					VentanaRegistroControlador.registrarLocalidad(local);
+					aniadirExito();
+					limpiarFields();
 				}
 			}
 		});
@@ -159,25 +163,37 @@ public class VentanaRegistro extends JFrame{
 			}
         });
 	}
-	
+	private void aniadirExito() {
+        JLabel lblExito = new JLabel("\u00A1Localidad Registrada con Éxito!");
+        lblExito.setForeground(new Color(0, 128, 0));
+        lblExito.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        lblExito.setBounds(25, 315, 195, 14);
+        panelRegistro.add(lblExito);
+	}
+	private void limpiarFields() {
+		usrLocalidad.setText("");
+		usrProvincia.setText("");
+		usrLatitud.setText("");
+		usrLongitud.setText("");
+	}
 	private boolean verificarDatos() {
 		boolean ret = true;
-		if (localidad.isBlank() || provincia.isBlank()) {
+		if (localidad.isBlank() || provincia.isBlank() || VentanaRegistroControlador.yaIngresada(localidad)) {
 			ret = false;
 		}
         try {
             String latitudS = usrLatitud.getText();
             latitud = Double.parseDouble(latitudS);
         } catch (NumberFormatException E) {
-        	ret = false;
-			JOptionPane.showMessageDialog(null, "Ingrese un valor apropiado.");
+        	JOptionPane.showMessageDialog(null, "Ingrese un valor apropiado.");
+        	return ret = false;
         }
         try {
             String longitudS = usrLongitud.getText();
             longitud = Double.parseDouble(longitudS);
         } catch (NumberFormatException E) {
-        	ret = false;
-			JOptionPane.showMessageDialog(null, "Ingrese un valor apropiado.");
+        	JOptionPane.showMessageDialog(null, "Ingrese un valor apropiado.");
+        	return ret = false;
         }
         return ret;
 	}

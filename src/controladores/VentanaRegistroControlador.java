@@ -23,4 +23,7 @@ public class VentanaRegistroControlador {
 	public static void registrarLocalidad(Localidad localidad) {
 		Registro.registrarLocalidad(localidad);
 	}
+	public static boolean yaIngresada(String nombre) {
+		return Registro.yaIngresada(nombre);
+	}
 }

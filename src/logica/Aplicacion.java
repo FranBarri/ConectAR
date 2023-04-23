@@ -3,15 +3,15 @@ package logica;
 import java.util.*;
 
 public class Aplicacion {
-    private List<Localidad> localidades;
+    private List<Vertice> localidades;
     private Grafo grafo;
     
     public Aplicacion() {
-        this.localidades = new ArrayList<Localidad>();
+        this.localidades = new ArrayList<Vertice>();
         this.grafo = new Grafo(0);
     }
     
-    public void agregarLocalidad(Localidad localidad) {
+    public void agregarLocalidad(Vertice localidad) {
         localidades.add(localidad);
         int n = localidades.size();
         Grafo nuevoGrafo = new Grafo(n);

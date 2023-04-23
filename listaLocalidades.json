@@ -1,0 +1,22 @@
+{
+  "lista": [
+    {
+      "nombre": "El Chalten",
+      "provincia": "Santa Cruz",
+      "latitud": -49.3299,
+      "longitud": -72.88605
+    },
+    {
+      "nombre": "San Nicolas",
+      "provincia": "Buenos Aires",
+      "latitud": -33.33425,
+      "longitud": -60.2108
+    },
+    {
+      "nombre": "Iruya",
+      "provincia": "Salta",
+      "latitud": -22.7689,
+      "longitud": -65.5806
+    }
+  ]
+}

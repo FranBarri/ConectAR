@@ -1,21 +1,21 @@
 package logica;
 
 public class Conexion implements Comparable<Conexion> {
-    private Localidad origen;
-    private Localidad destino;
+    private Vertice origen;
+    private Vertice destino;
     private double costo;
 
-    public Conexion(Localidad origen, Localidad destino, double costo) {
+    public Conexion(Vertice origen, Vertice destino, double costo) {
         this.origen = origen;
         this.destino = destino;
         this.costo = costo;
     }
 
-    public Localidad getOrigen() {
+    public Vertice getOrigen() {
         return origen;
     }
 
-    public Localidad getDestino() {
+    public Vertice getDestino() {
         return destino;
     }
 
