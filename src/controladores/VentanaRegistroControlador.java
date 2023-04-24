@@ -1,6 +1,7 @@
 package controladores;
 
 import gSon.Localidad;
+import sistema.Geonames;
 import sistema.Registro;
 import visual.VentanaRegistro;
 
@@ -25,5 +26,12 @@ public class VentanaRegistroControlador {
 	}
 	public static boolean yaIngresada(String nombre) {
 		return Registro.yaIngresada(nombre);
+	}
+	public static void buscarPorNombre(String nombre) {
+		try {
+			Geonames.buscarPorNombre(nombre);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

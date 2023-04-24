@@ -17,6 +17,30 @@
       "provincia": "Salta",
       "latitud": -22.7689,
       "longitud": -65.5806
+    },
+    {
+      "nombre": "Tucumán",
+      "provincia": "Tucuman",
+      "latitud": -26.82414,
+      "longitud": -65.2226
+    },
+    {
+      "nombre": "Bella Vista",
+      "provincia": "Buenos Aires",
+      "latitud": -34.5651,
+      "longitud": -58.69034
+    },
+    {
+      "nombre": "Partido de Malvinas Argentinas",
+      "provincia": "Buenos Aires",
+      "latitud": -34.50771,
+      "longitud": -58.6956
+    },
+    {
+      "nombre": "Bahía Blanca",
+      "provincia": "Buenos Aires",
+      "latitud": -38.71959,
+      "longitud": -62.27243
     }
   ]
 }

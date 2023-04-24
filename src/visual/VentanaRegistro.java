@@ -28,6 +28,8 @@ import java.awt.Color;
 public class VentanaRegistro extends JFrame{
 	private String localidad;
 	private String provincia;
+	private String latitudS;
+	private String longitudS;
 	private double latitud;
 	private double longitud;
 	private PanelGradiente panelGradiente1;
@@ -145,13 +147,22 @@ public class VentanaRegistro extends JFrame{
         
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		        localidad = usrLocalidad.getText();
-		        provincia = usrProvincia.getText();
-				if (verificarDatos()) {
-					Localidad local = VentanaRegistroControlador.generarLocalidad(localidad, provincia, latitud, longitud);
-					VentanaRegistroControlador.registrarLocalidad(local);
-					aniadirExito();
-					limpiarFields();
+				localidad = usrLocalidad.getText();
+				provincia = usrProvincia.getText();
+				latitudS = usrLatitud.getText();
+				longitudS =usrLongitud.getText();
+				if (latitudS.isBlank() || longitudS.isBlank()) {
+					VentanaRegistroControlador.buscarPorNombre(localidad);
+				} else {
+					if (verificarDatos()) {
+						latitud = Double.parseDouble(latitudS);
+						longitud = Double.parseDouble(longitudS);
+						Localidad local = VentanaRegistroControlador.generarLocalidad(localidad, provincia, latitud, longitud);
+						VentanaRegistroControlador.registrarLocalidad(local);
+						aniadirExito();
+						limpiarFields();
+					}
+		        	JOptionPane.showMessageDialog(null, "Ingrese datos apropiados.");
 				}
 			}
 		});
@@ -177,24 +188,9 @@ public class VentanaRegistro extends JFrame{
 		usrLongitud.setText("");
 	}
 	private boolean verificarDatos() {
-		boolean ret = true;
 		if (localidad.isBlank() || provincia.isBlank() || VentanaRegistroControlador.yaIngresada(localidad)) {
-			ret = false;
+			return false;
 		}
-        try {
-            String latitudS = usrLatitud.getText();
-            latitud = Double.parseDouble(latitudS);
-        } catch (NumberFormatException E) {
-        	JOptionPane.showMessageDialog(null, "Ingrese un valor apropiado.");
-        	return ret = false;
-        }
-        try {
-            String longitudS = usrLongitud.getText();
-            longitud = Double.parseDouble(longitudS);
-        } catch (NumberFormatException E) {
-        	JOptionPane.showMessageDialog(null, "Ingrese un valor apropiado.");
-        	return ret = false;
-        }
-        return ret;
+        return true;
 	}
 }
