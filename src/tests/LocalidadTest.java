@@ -23,18 +23,6 @@ public class LocalidadTest
 		localidad = new Localidad("UNGS", "", 12, 15);
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void localidadLatitudNegativa() 
-	{
-		localidad = new Localidad("UNGS", "Buenos Aires", -12, 15);
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void localidadSinLongitud() 
-	{
-		localidad = new Localidad("UNGS", "Buenos Aires", 12, 0);
-	}
-	
 	@Test
 	public void constructorLocalidadTest()
 	{

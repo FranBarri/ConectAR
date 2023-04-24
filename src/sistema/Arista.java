@@ -17,10 +17,10 @@ public class Arista
 		costoTotal = calcularCosto();
 	}
 	
-	public double calcularCosto()
+	private double calcularCosto()
 	{
-		return (localidad1.getLatitud() - localidad2.getLatitud())
-				+ (localidad1.getLongitud() - localidad2.getLongitud());
+		FormulaHaversineArista fm = new FormulaHaversineArista(this.localidad1, this.localidad2);
+		return fm.getDistancia();
 	}
 
 	public Localidad getLocalidad1() {
