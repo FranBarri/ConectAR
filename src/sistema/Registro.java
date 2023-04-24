@@ -48,14 +48,13 @@ public class Registro {
 			mapa.addMapMarker(marca);			
 		}
 	}
-	public static boolean yaIngresada(String nombre) {
+	public static boolean yaIngresada(Localidad localidad) {
 	    GenerarGson gsonGenerator = new GenerarGson();
 
 	    ListaLocalidades lista = gsonGenerator.getListaDesdeJson();
 	    List<Localidad> localidades = lista.getLista();
 	    for (Localidad local : localidades) {
-	    	if (nombre.equals(local.getNombre())) {
-	        	JOptionPane.showMessageDialog(null, "Esa Localidad ya fue Registrada.");
+	    	if (localidad.getLatitud() == (local.getLatitud()) && localidad.getLongitud() == (local.getLongitud())) {
 	    		return true;
 	    	}
 	    }

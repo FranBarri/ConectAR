@@ -13,6 +13,7 @@ import swing.PanelGradiente;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +31,8 @@ public class VentanaMapa extends JFrame{
 		iniciar();
 	}
 
+	//Preguntar por borrando puntos que se agregan en una sesion, pero los ya guardados no se borran
+	//y mapa volviendo a sus coords previas cuando registro y vuelvo a mapa
 	public void iniciar() {
 		marcas = new ArrayList<MapMarker>();
 		setBounds(100, 100, 900, 600);
@@ -46,46 +49,43 @@ public class VentanaMapa extends JFrame{
 
         getContentPane().add(panelGradiente1, BorderLayout.CENTER);
 				
+        JPanel panel = new JPanel();
+        panel.setBounds(10, 11, 862, 481);
+        panelGradiente1.add(panel);
+        panel.setLayout(null);
+        
+        mapa = new JMapViewer();
+        mapa.setBounds(10, 11, 842, 459);
+        panel.add(mapa);
+        mapa.setZoomControlsVisible(false);
 		
-		JButton btnVolver = new JButton("Volver");
-		btnVolver.setForeground(new Color(0, 0, 0));
-		btnVolver.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnVolver.setBackground(Color.BLUE);
-		btnVolver.setBounds(782, 525, 90, 24);
-		panelGradiente1.add(btnVolver);
+		JButton btnRegistro = new JButton("Nueva Localidad");
+		btnRegistro.setForeground(new Color(0, 0, 0));
+		btnRegistro.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnRegistro.setBackground(Color.BLUE);
+		btnRegistro.setBounds(10, 525, 119, 24);
+		panelGradiente1.add(btnRegistro);
 		
-		JButton btnCargarVertices = new JButton("Cargar Localidades");
-		btnCargarVertices.setForeground(new Color(0, 0, 0));
-		btnCargarVertices.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnCargarVertices.setBackground(Color.BLUE);
-		btnCargarVertices.setBounds(641, 525, 131, 24);
-		panelGradiente1.add(btnCargarVertices);
+		btnRegistro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		JButton btnCalcular = new JButton("Calcular");
+		btnCalcular.setForeground(Color.BLACK);
+		btnCalcular.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnCalcular.setBackground(Color.BLUE);
+		btnCalcular.setBounds(799, 527, 73, 24);
+		panelGradiente1.add(btnCalcular);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 862, 481);
-		panelGradiente1.add(panel);
-		panel.setLayout(null);
 		
-		mapa = new JMapViewer();
-		mapa.setBounds(10, 11, 842, 459);
-		panel.add(mapa);
-		mapa.setZoomControlsVisible(false);
-		VentanaMapaControlador.crearVertices(marcas);
-		VentanaMapaControlador.cargarVertices(mapa, marcas);
-		
-        btnVolver.addActionListener(new ActionListener() {
+        btnRegistro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnRegistro.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-				VentanaRegistroControlador.mostrar();
+				VentanaRegistroControlador.mostrarAuto();
 				dispose();
 			}
         });
 
-        btnCargarVertices.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		VentanaMapaControlador.crearVertices(marcas);
-        		VentanaMapaControlador.cargarVertices(mapa, marcas);
-        	}
-        });
+		VentanaMapaControlador.crearVertices(marcas);
+		VentanaMapaControlador.cargarVertices(mapa, marcas);
+		
         Coordinate coord = new Coordinate(-38.416097, -63.616672);
 		mapa.setDisplayPosition(coord, 5);
 	}

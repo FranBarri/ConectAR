@@ -41,6 +41,18 @@
       "provincia": "Buenos Aires",
       "latitud": -38.71959,
       "longitud": -62.27243
+    },
+    {
+      "nombre": "Mendoza",
+      "provincia": "Mendoza",
+      "latitud": -32.89084,
+      "longitud": -68.82717
+    },
+    {
+      "nombre": "Greater Rosario",
+      "provincia": "Santa Fe",
+      "latitud": -32.97516,
+      "longitud": -60.68189
     }
   ]
 }

@@ -3,19 +3,29 @@ package controladores;
 import gSon.Localidad;
 import sistema.Geonames;
 import sistema.Registro;
-import visual.VentanaRegistro;
+import visual.VentanaAuto;
+import visual.VentanaRegistroManual;
 
 public class VentanaRegistroControlador {
 	
-	public static VentanaRegistro ventanaRegistro = new VentanaRegistro();
 	
-	public static void cerrar() {
-		ventanaRegistro.setVisible(false);
+	public static VentanaRegistroManual ventanaRegistroManual = new VentanaRegistroManual();
+	public static VentanaAuto ventanaAuto = new VentanaAuto();
+	
+	
+	public static void cerrarManual() {
+		ventanaRegistroManual.setVisible(false);
 	}
-	
-	public static void mostrar() {
-		ventanaRegistro.initialize();
-		ventanaRegistro.setVisible(true);
+	public static void cerrarAuto() {
+		ventanaRegistroManual.setVisible(false);
+	}
+	public static void mostrarManual() {
+		ventanaRegistroManual.initialize();
+		ventanaRegistroManual.setVisible(true);
+	}
+	public static void mostrarAuto() {
+		ventanaAuto.initialize();
+		ventanaAuto.setVisible(true);
 	}
 	public static Localidad generarLocalidad(String nombre, String provincia, double latitud, double longitud) {
 		return Registro.generarLocalidad(nombre, provincia, latitud, longitud);
@@ -24,14 +34,15 @@ public class VentanaRegistroControlador {
 	public static void registrarLocalidad(Localidad localidad) {
 		Registro.registrarLocalidad(localidad);
 	}
-	public static boolean yaIngresada(String nombre) {
+	public static boolean yaIngresada(Localidad nombre) {
 		return Registro.yaIngresada(nombre);
 	}
-	public static void buscarPorNombre(String nombre) {
+	public static Localidad buscarPorNombre(String nombre) {
 		try {
-			Geonames.buscarPorNombre(nombre);
+			return Geonames.buscarPorNombre(nombre);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 }

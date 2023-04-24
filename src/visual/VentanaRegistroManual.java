@@ -23,13 +23,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Cursor;
 
 @SuppressWarnings("serial")
-public class VentanaRegistro extends JFrame{
+public class VentanaRegistroManual extends JFrame{
 	private String localidad;
 	private String provincia;
-	private String latitudS;
-	private String longitudS;
 	private double latitud;
 	private double longitud;
 	private PanelGradiente panelGradiente1;
@@ -39,7 +38,7 @@ public class VentanaRegistro extends JFrame{
 	private JTextField usrLatitud;
 	private JTextField usrLongitud;
 
-	public VentanaRegistro() {
+	public VentanaRegistroManual() {
 		initialize();
 	}
 
@@ -61,12 +60,12 @@ public class VentanaRegistro extends JFrame{
 
         panelGradiente1.setLayer(panelRegistro, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
-        JLabel lblRegistrar = new JLabel("Registrar");
+        JLabel lblRegistrar = new JLabel("Registro");
         lblRegistrar.setBounds(0, 23, 230, 37);
         lblRegistrar.setFont(new Font("Tahoma", Font.BOLD, 30));
         lblRegistrar.setHorizontalAlignment(SwingConstants.CENTER);
         
-        JLabel lblRegistro1 = new JLabel("Localidad");
+        JLabel lblRegistro1 = new JLabel("Manual");
         lblRegistro1.setBounds(0, 66, 230, 24);
         lblRegistro1.setHorizontalAlignment(SwingConstants.CENTER);
         lblRegistro1.setFont(new Font("Tahoma", Font.BOLD, 30));
@@ -144,29 +143,25 @@ public class VentanaRegistro extends JFrame{
         
         panelGradiente1.setLayout(gl_panelGradiente1);
 
-        
+        btnRegistrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				localidad = usrLocalidad.getText();
 				provincia = usrProvincia.getText();
-				latitudS = usrLatitud.getText();
-				longitudS =usrLongitud.getText();
-				if (latitudS.isBlank() || longitudS.isBlank()) {
-					VentanaRegistroControlador.buscarPorNombre(localidad);
+				Localidad local = VentanaRegistroControlador.generarLocalidad(localidad, provincia, latitud, longitud);
+				if (VentanaRegistroControlador.yaIngresada(local)) {
+					JOptionPane.showMessageDialog(null, "Localidad ya ingresada.");
 				} else {
 					if (verificarDatos()) {
-						latitud = Double.parseDouble(latitudS);
-						longitud = Double.parseDouble(longitudS);
-						Localidad local = VentanaRegistroControlador.generarLocalidad(localidad, provincia, latitud, longitud);
 						VentanaRegistroControlador.registrarLocalidad(local);
 						aniadirExito();
 						limpiarFields();
 					}
-		        	JOptionPane.showMessageDialog(null, "Ingrese datos apropiados.");
 				}
 			}
 		});
 		
+        btnMapa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnMapa.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
 				VentanaMapaControlador.mostrar();
@@ -175,7 +170,7 @@ public class VentanaRegistro extends JFrame{
         });
 	}
 	private void aniadirExito() {
-        JLabel lblExito = new JLabel("\u00A1Localidad Registrada con Éxito!");
+        JLabel lblExito = new JLabel("\u00A1Localidad registrada con éxito!");
         lblExito.setForeground(new Color(0, 128, 0));
         lblExito.setFont(new Font("Tahoma", Font.PLAIN, 11));
         lblExito.setBounds(25, 315, 195, 14);
@@ -188,9 +183,25 @@ public class VentanaRegistro extends JFrame{
 		usrLongitud.setText("");
 	}
 	private boolean verificarDatos() {
-		if (localidad.isBlank() || provincia.isBlank() || VentanaRegistroControlador.yaIngresada(localidad)) {
-			return false;
+		boolean ret = true;
+		if (localidad.isBlank() || provincia.isBlank()) {
+			ret = false;
 		}
-        return true;
+        try {
+            String latitudS = usrLatitud.getText();
+            latitud = Double.parseDouble(latitudS);
+        } catch (NumberFormatException E) {
+        	JOptionPane.showMessageDialog(null, "Ingrese un valor apropiado.");
+        	return ret = false;
+        }
+        try {
+            String longitudS = usrLongitud.getText();
+            longitud = Double.parseDouble(longitudS);
+        } catch (NumberFormatException E) {
+        	JOptionPane.showMessageDialog(null, "Ingrese un valor apropiado.");
+        	return ret = false;
+        }
+        return ret;
 	}
+
 }
