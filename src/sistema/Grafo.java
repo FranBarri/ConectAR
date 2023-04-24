@@ -1,4 +1,4 @@
-package logica;
+package sistema;
 
 import java.util.ArrayList;
 import java.util.HashSet;

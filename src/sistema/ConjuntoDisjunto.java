@@ -1,4 +1,4 @@
-package logica;
+package sistema;
 
 public class ConjuntoDisjunto {
 

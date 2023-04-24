@@ -1,4 +1,4 @@
-package logica;
+package sistema;
 
 import java.util.HashSet;
 import java.util.LinkedList;

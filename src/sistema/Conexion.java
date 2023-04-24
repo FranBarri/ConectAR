@@ -1,4 +1,4 @@
-package logica;
+package sistema;
 
 public class Conexion implements Comparable<Conexion> {
     private Vertice origen;
