@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 
 import swing.PanelBorder;
 import swing.PanelGradiente;
+
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
@@ -17,10 +19,12 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -30,6 +34,8 @@ import java.awt.Cursor;
 @SuppressWarnings("serial")
 public class VentanaAuto extends JFrame{
 	private String localidad;
+	private File imagen;
+	private Image icono;
 	private PanelGradiente panelGradiente1;
 	private PanelBorder panelRegistro;
 	private JTextField usrLocalidad;
@@ -41,6 +47,15 @@ public class VentanaAuto extends JFrame{
 	public void initialize() {
 		setBounds(100, 100, 900, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//Cargar icono y titulo de ventana
+		try {
+			imagen = new File("imagenes\\icono.png");
+			icono = ImageIO.read(imagen);
+			setIconImage(icono);
+		} catch (Exception e) {
+			System.out.println("Error cargando imagen: " + e.getMessage());
+		}
+		setTitle("ConectAR");
 		setLocationRelativeTo(null); //Centra la ventana en pantalla
 		setResizable(false);
 

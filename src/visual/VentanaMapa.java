@@ -1,5 +1,6 @@
 package visual;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
@@ -13,8 +14,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 @SuppressWarnings("serial")
@@ -23,6 +26,8 @@ public class VentanaMapa extends JFrame{
 	private PanelGradiente panelGradiente1;
 	private JMapViewer mapa;
 	private ArrayList<MapMarker> marcas;
+	private File imagen;
+	private Image icono;
 	
 	public VentanaMapa() {
 		iniciar();
@@ -35,6 +40,15 @@ public class VentanaMapa extends JFrame{
 		setBounds(100, 100, 900, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
+		//Cargar icono y titulo de ventana
+		try {
+			imagen = new File("imagenes\\icono.png");
+			icono = ImageIO.read(imagen);
+			setIconImage(icono);
+		} catch (Exception e) {
+			System.out.println("Error cargando imagen: " + e.getMessage());
+		}
+		setTitle("ConectAR");
 		setLocationRelativeTo(null); //Centra la ventana en pantalla
 		setResizable(false);
 		
@@ -55,12 +69,6 @@ public class VentanaMapa extends JFrame{
         mapa.setBounds(10, 11, 842, 459);
         panel.add(mapa);
         mapa.setZoomControlsVisible(false);
-        
-		VentanaMapaControlador.crearVertices(marcas);
-		VentanaMapaControlador.cargarVertices(mapa, marcas);
-		
-        Coordinate coord = new Coordinate(-38.416097, -63.616672);
-		mapa.setDisplayPosition(coord, 5);
 		
 		JButton btnRegistro = new JButton("Nueva Localidad");
 		btnRegistro.setForeground(new Color(0, 0, 0));
@@ -88,8 +96,14 @@ public class VentanaMapa extends JFrame{
         btnCalcular.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		VentanaMapaControlador.armarSistemaDeLineas(mapa);
-        		mapa.repaint();
         	}
         });
+        
+        mapa.repaint();
+		VentanaMapaControlador.crearVertices(marcas);
+		VentanaMapaControlador.cargarVertices(mapa, marcas);
+		
+        Coordinate coord = new Coordinate(-33.416097, -63.616672);
+		mapa.setDisplayPosition(coord, 5);
 	}
 }
