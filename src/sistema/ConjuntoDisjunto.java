@@ -35,4 +35,9 @@ public class ConjuntoDisjunto {
             rango[raizX]++;
         }
     }
+    
+    public boolean estaConectado(int x, int y)
+    {
+    	return encontrar(x) == encontrar(y);
+    }
 }

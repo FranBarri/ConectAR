@@ -15,7 +15,7 @@ public class BFS
 		if (g == null)
 			throw new IllegalArgumentException("El grafo no puede ser null.");
 		
-		return g.tamano() == 0 || alcanzables(g, 0).size() == g.tamano();
+		return g.cantidadVertices() == 0 || alcanzables(g, 0).size() == g.cantidadVertices();
 	}
 
 	public static Set<Integer> alcanzables(Grafo g, int origen) 
@@ -37,7 +37,7 @@ public class BFS
 
 	private static void agregarVecinosPendientes(Grafo g, int vertice) 
 	{		
-		for (int vecino : g.vecinos(vertice))
+		for (int vecino : g.getVecinos(vertice))
 			if (!marcados[vecino] && !L.contains(vecino))
 				L.add(vecino);
 	}

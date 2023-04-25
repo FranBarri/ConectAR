@@ -119,7 +119,12 @@
 
 package sistema;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import gSon.Localidad;
 
 class Kruskal{
 	class Edge implements Comparable<Edge> {
@@ -203,5 +208,32 @@ class Kruskal{
 		for (i = 0; i < e; ++i)
 			System.out.println(result[i].src+" -- " + 
 					result[i].dest+" == " + result[i].weight);
+	}
+	
+//-----------------------------------------------------------------------
+	
+	public List<Arista> kruskal() {
+		List<Arista> resultado = new ArrayList<>();
+
+		// Crear un conjunto para cada vértice
+		ConjuntoDisjunto conjuntoDisjunto = new ConjuntoDisjunto(vertices);
+
+		// Ordenar las aristas por peso
+		List<Arista> aristas = getAristas();
+		Collections.sort(aristas);
+
+		// Recorrer todas las aristas
+		for (Arista a : aristas) {
+			Localidad l1 = a.getLocalidad1();
+			Localidad l2 = a.getLocalidad2();
+			// Si los vértices no están en el mismo conjunto,
+			// agregar la arista al resultado y unir los conjuntos
+			if (!conjuntoDisjunto.estaConectado(l1, l2)) {
+				resultado.add(a);
+				conjuntoDisjunto.unir(l1, l2);
+			}
+		}
+
+		return resultado;
 	}
 }
