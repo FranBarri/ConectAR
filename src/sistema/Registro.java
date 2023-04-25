@@ -1,5 +1,6 @@
 package sistema;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -7,7 +8,9 @@ import javax.swing.JOptionPane;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
+import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 
 import gSon.GenerarGson;
 import gSon.ListaLocalidades;
@@ -59,5 +62,19 @@ public class Registro {
 	    	}
 	    }
 	    return false;
+	}
+	public static void mostrarAristas(JMapViewer mapa) {
+		ArrayList<Coordinate> coords = new ArrayList<>();
+	    GenerarGson gsonGenerator = new GenerarGson();
+
+	    ListaLocalidades lista = gsonGenerator.getListaDesdeJson();
+	    List<Localidad> localidades = lista.getLista();
+	    for (Localidad local : localidades) {
+	    	coords.add(new Coordinate(local.getLatitud(), local.getLongitud()));
+	    	MapPolygon polygon = new MapPolygonImpl(coords);
+	    	polygon.getStyle().setBackColor(null);
+	    	polygon.getStyle().setColor(Color.BLUE);
+			mapa.addMapPolygon(polygon);
+	    }
 	}
 }

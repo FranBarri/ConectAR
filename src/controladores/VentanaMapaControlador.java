@@ -27,4 +27,8 @@ public class VentanaMapaControlador {
 	public static void cargarVertices(JMapViewer mapa, ArrayList<MapMarker> marcas) {
 		Registro.cargarVertices(mapa, marcas);
 	}
+
+	public static void armarSistemaDeLineas(JMapViewer mapaAGM) {
+		Registro.mostrarAristas(mapaAGM);
+	}
 }

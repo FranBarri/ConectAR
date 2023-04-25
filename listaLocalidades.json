@@ -1,25 +1,13 @@
 {
   "lista": [
     {
-      "nombre": "El Chalten",
-      "provincia": "Santa Cruz",
-      "latitud": -49.3299,
-      "longitud": -72.88605
-    },
-    {
       "nombre": "San Nicolas",
       "provincia": "Buenos Aires",
       "latitud": -33.33425,
       "longitud": -60.2108
     },
     {
-      "nombre": "Iruya",
-      "provincia": "Salta",
-      "latitud": -22.7689,
-      "longitud": -65.5806
-    },
-    {
-      "nombre": "Tucumán",
+      "nombre": "Tucumï¿½n",
       "provincia": "Tucuman",
       "latitud": -26.82414,
       "longitud": -65.2226
@@ -31,13 +19,7 @@
       "longitud": -58.69034
     },
     {
-      "nombre": "Partido de Malvinas Argentinas",
-      "provincia": "Buenos Aires",
-      "latitud": -34.50771,
-      "longitud": -58.6956
-    },
-    {
-      "nombre": "Bahía Blanca",
+      "nombre": "Bahï¿½a Blanca",
       "provincia": "Buenos Aires",
       "latitud": -38.71959,
       "longitud": -62.27243
@@ -53,6 +35,12 @@
       "provincia": "Santa Fe",
       "latitud": -32.97516,
       "longitud": -60.68189
+    },
+    {
+      "nombre": "Londres",
+      "provincia": "Catamarca",
+      "latitud": -27.71439,
+      "longitud": -67.13349
     }
   ]
 }

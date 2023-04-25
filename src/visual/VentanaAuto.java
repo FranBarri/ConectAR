@@ -30,11 +30,6 @@ import java.awt.Cursor;
 @SuppressWarnings("serial")
 public class VentanaAuto extends JFrame{
 	private String localidad;
-	private String provincia;
-	private String latitudS;
-	private String longitudS;
-	private double latitud;
-	private double longitud;
 	private PanelGradiente panelGradiente1;
 	private PanelBorder panelRegistro;
 	private JTextField usrLocalidad;

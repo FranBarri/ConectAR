@@ -4,13 +4,11 @@ import javax.swing.*;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
-import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
 import swing.PanelGradiente;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -18,7 +16,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("serial")
 public class VentanaMapa extends JFrame{
@@ -58,6 +55,12 @@ public class VentanaMapa extends JFrame{
         mapa.setBounds(10, 11, 842, 459);
         panel.add(mapa);
         mapa.setZoomControlsVisible(false);
+        
+		VentanaMapaControlador.crearVertices(marcas);
+		VentanaMapaControlador.cargarVertices(mapa, marcas);
+		
+        Coordinate coord = new Coordinate(-38.416097, -63.616672);
+		mapa.setDisplayPosition(coord, 5);
 		
 		JButton btnRegistro = new JButton("Nueva Localidad");
 		btnRegistro.setForeground(new Color(0, 0, 0));
@@ -66,14 +69,12 @@ public class VentanaMapa extends JFrame{
 		btnRegistro.setBounds(10, 525, 119, 24);
 		panelGradiente1.add(btnRegistro);
 		
-		btnRegistro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		JButton btnCalcular = new JButton("Calcular");
 		btnCalcular.setForeground(Color.BLACK);
 		btnCalcular.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnCalcular.setBackground(Color.BLUE);
 		btnCalcular.setBounds(799, 527, 73, 24);
 		panelGradiente1.add(btnCalcular);
-		
 		
         btnRegistro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnRegistro.addActionListener(new ActionListener() {
@@ -82,11 +83,13 @@ public class VentanaMapa extends JFrame{
 				dispose();
 			}
         });
-
-		VentanaMapaControlador.crearVertices(marcas);
-		VentanaMapaControlador.cargarVertices(mapa, marcas);
-		
-        Coordinate coord = new Coordinate(-38.416097, -63.616672);
-		mapa.setDisplayPosition(coord, 5);
+        
+        btnCalcular.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnCalcular.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		VentanaMapaControlador.armarSistemaDeLineas(mapa);
+        		mapa.repaint();
+        	}
+        });
 	}
 }
