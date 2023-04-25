@@ -5,14 +5,12 @@ public class Localidad {
     private String provincia;
     private double latitud;
     private double longitud;
-    private int id;
 
-    public Localidad(String nombre, String provincia, double latitud, double longitud,int id) {
+    public Localidad(String nombre, String provincia, double latitud, double longitud) {
         this.nombre = nombre;
         this.provincia = provincia;
         this.latitud = latitud;
         this.longitud = longitud;
-        this.id= id;
     }
 
     // Métodos getter y setter
