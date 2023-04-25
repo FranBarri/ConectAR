@@ -7,12 +7,6 @@
       "longitud": -60.2108
     },
     {
-      "nombre": "Tucum�n",
-      "provincia": "Tucuman",
-      "latitud": -26.82414,
-      "longitud": -65.2226
-    },
-    {
       "nombre": "Bella Vista",
       "provincia": "Buenos Aires",
       "latitud": -34.5651,
@@ -37,10 +31,16 @@
       "longitud": -60.68189
     },
     {
-      "nombre": "Londres",
-      "provincia": "Catamarca",
-      "latitud": -27.71439,
-      "longitud": -67.13349
+      "nombre": "Tandil",
+      "provincia": "Buenos Aires",
+      "latitud": -37.32167,
+      "longitud": -59.13316
+    },
+    {
+      "nombre": "C�rdoba",
+      "provincia": "Cordoba",
+      "latitud": -31.4135,
+      "longitud": -64.18105
     }
   ]
 }

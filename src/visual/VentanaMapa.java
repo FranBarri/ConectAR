@@ -88,7 +88,7 @@ public class VentanaMapa extends JFrame{
         btnRegistro.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
 				VentanaRegistroControlador.mostrarAuto();
-				dispose();
+				VentanaMapaControlador.cerrar();
 			}
         });
         

@@ -180,7 +180,7 @@ public class VentanaRegistroManual extends JFrame{
         btnMapa.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
 				VentanaMapaControlador.mostrar();
-				dispose();
+				VentanaRegistroControlador.cerrarManual();
 			}
         });
 	}
@@ -218,5 +218,4 @@ public class VentanaRegistroManual extends JFrame{
         }
         return ret;
 	}
-
 }

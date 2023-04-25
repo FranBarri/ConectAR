@@ -30,6 +30,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Cursor;
+import javax.swing.JTextArea;
+import javax.swing.DropMode;
 
 @SuppressWarnings("serial")
 public class VentanaAuto extends JFrame{
@@ -38,6 +40,7 @@ public class VentanaAuto extends JFrame{
 	private Image icono;
 	private PanelGradiente panelGradiente1;
 	private PanelBorder panelRegistro;
+	private PanelBorder panelRegistro2;
 	private JTextField usrLocalidad;
 
 	public VentanaAuto() {
@@ -61,6 +64,7 @@ public class VentanaAuto extends JFrame{
 
 		panelGradiente1 = new swing.PanelGradiente();
 		panelRegistro = new swing.PanelBorder();
+		panelRegistro.setBounds(330, 150, 230, 233);
 	
 		panelGradiente1.setColorPrimario(new java.awt.Color(146, 233, 251));
         panelGradiente1.setColorSecundario(new java.awt.Color(12, 137, 163));
@@ -101,22 +105,6 @@ public class VentanaAuto extends JFrame{
         btnRegistrar.setBounds(115, 178, 90, 24);
         panelRegistro.add(btnRegistrar);
         
-        GroupLayout gl_panelGradiente1 = new GroupLayout(panelGradiente1);
-        gl_panelGradiente1.setHorizontalGroup(
-        	gl_panelGradiente1.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panelGradiente1.createSequentialGroup()
-        			.addGap(330)
-        			.addComponent(panelRegistro, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(324, Short.MAX_VALUE))
-        );
-        gl_panelGradiente1.setVerticalGroup(
-        	gl_panelGradiente1.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panelGradiente1.createSequentialGroup()
-        			.addGap(150)
-        			.addComponent(panelRegistro, GroupLayout.PREFERRED_SIZE, 233, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(228, Short.MAX_VALUE))
-        );
-        
         JButton btnMapa = new JButton("Mapa");
         btnMapa.setForeground(new Color(0, 0, 0));
         btnMapa.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -131,17 +119,16 @@ public class VentanaAuto extends JFrame{
         lblRegManual.setBounds(24, 208, 181, 14);
         panelRegistro.add(lblRegManual);
         
-        panelGradiente1.setLayout(gl_panelGradiente1);
-        
         lblRegManual.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         lblRegManual.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
             	VentanaRegistroControlador.mostrarManual();
-            	dispose();
+            	VentanaRegistroControlador.cerrarAuto();
             }
         });
         
+        //Cuando vuelvo a registrar despues de ir y volver del mapa, el Txtfield se queda en ""
         btnRegistrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnRegistrar.setToolTipText("Registra la primer localidad encontrada");
         btnRegistrar.addActionListener(new ActionListener() {
@@ -149,24 +136,44 @@ public class VentanaAuto extends JFrame{
         		localidad = usrLocalidad.getText();
         		if (!localidad.isBlank()) {
         			Localidad local = VentanaRegistroControlador.buscarPorNombre(localidad);
-        			if (VentanaRegistroControlador.yaIngresada(local)) {
-        				JOptionPane.showMessageDialog(null, "Localidad ya ingresada.");
-        			} else {
-        				VentanaRegistroControlador.registrarLocalidad(local);
-        				aniadirExito();
-        				limpiarFields();
+        			if (local != null) {
+        				if (VentanaRegistroControlador.yaIngresada(local)) {
+        					JOptionPane.showMessageDialog(null, "Localidad ya ingresada.");
+        				} else {
+        					VentanaRegistroControlador.registrarLocalidad(local);
+        					{
+        						panelRegistro2 = new swing.PanelBorder();
+        						panelRegistro2.setBounds(330, 394, 230, 133);
+        						panelGradiente1.add(panelRegistro2);
+        						panelRegistro2.setBackground(new java.awt.Color(255, 255, 255));
+        						panelGradiente1.setLayer(panelRegistro2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        						JTextArea txtrSeRegistr = new JTextArea();
+        						txtrSeRegistr.setEditable(false);
+        						txtrSeRegistr.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        						txtrSeRegistr.setText("Se registr\u00F3: \r\n" + local.getNombre() + ", " + local.getProvincia() + 
+        								"\r\nCon las coordenadas: \r\n" + "Latitud " + local.getLatitud() 
+        								+ "\r\nLongitud " + local.getLongitud());
+        						txtrSeRegistr.setBounds(10, 11, 210, 111);
+        						panelRegistro2.add(txtrSeRegistr);
+        					}
+        					aniadirExito();
+        					limpiarFields();
+        				}
         			}
         		} else {
         			JOptionPane.showMessageDialog(null, "Ingrese datos apropiados.");
         		}
         	}
         });
+        panelGradiente1.setLayout(null);
+        panelGradiente1.add(panelRegistro);
         
         btnMapa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnMapa.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
 				VentanaMapaControlador.mostrar();
-				dispose();
+				VentanaRegistroControlador.cerrarAuto();
 			}
         });
 	}
