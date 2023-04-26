@@ -17,7 +17,7 @@ public class VentanaRegistroControlador {
 		ventanaRegistroManual.setVisible(false);
 	}
 	public static void cerrarAuto() {
-		ventanaRegistroManual.setVisible(false);
+		ventanaAuto.setVisible(false);
 	}
 	public static void mostrarManual() {
 		ventanaRegistroManual.initialize();

@@ -73,14 +73,14 @@ public class VentanaMapa extends JFrame{
 		JButton btnRegistro = new JButton("Nueva Localidad");
 		btnRegistro.setForeground(new Color(0, 0, 0));
 		btnRegistro.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnRegistro.setBackground(Color.BLUE);
+		btnRegistro.setBackground(Color.LIGHT_GRAY);
 		btnRegistro.setBounds(10, 525, 119, 24);
 		panelGradiente1.add(btnRegistro);
 		
 		JButton btnCalcular = new JButton("Calcular");
 		btnCalcular.setForeground(Color.BLACK);
 		btnCalcular.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnCalcular.setBackground(Color.BLUE);
+		btnCalcular.setBackground(Color.LIGHT_GRAY);
 		btnCalcular.setBounds(799, 527, 73, 24);
 		panelGradiente1.add(btnCalcular);
 		

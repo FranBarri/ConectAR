@@ -130,7 +130,7 @@ public class VentanaRegistroManual extends JFrame{
         
         JButton btnRegistrar = new JButton("Registrar");
         btnRegistrar.setForeground(new Color(0, 0, 0));
-        btnRegistrar.setBackground(new Color(0, 0, 255));
+        btnRegistrar.setBackground(Color.LIGHT_GRAY);
         btnRegistrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
         btnRegistrar.setBounds(115, 337, 90, 24);
         panelRegistro.add(btnRegistrar);
@@ -152,7 +152,7 @@ public class VentanaRegistroManual extends JFrame{
         JButton btnMapa = new JButton("Mapa");
         btnMapa.setForeground(new Color(0, 0, 0));
         btnMapa.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnMapa.setBackground(Color.BLUE);
+        btnMapa.setBackground(Color.LIGHT_GRAY);
         btnMapa.setBounds(24, 337, 68, 24);
         panelRegistro.add(btnMapa);
         

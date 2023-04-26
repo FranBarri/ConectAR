@@ -100,7 +100,7 @@ public class VentanaAuto extends JFrame{
         
         JButton btnRegistrar = new JButton("Registrar");
         btnRegistrar.setForeground(new Color(0, 0, 0));
-        btnRegistrar.setBackground(new Color(0, 0, 255));
+        btnRegistrar.setBackground(Color.LIGHT_GRAY);
         btnRegistrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
         btnRegistrar.setBounds(115, 178, 90, 24);
         panelRegistro.add(btnRegistrar);
@@ -108,7 +108,7 @@ public class VentanaAuto extends JFrame{
         JButton btnMapa = new JButton("Mapa");
         btnMapa.setForeground(new Color(0, 0, 0));
         btnMapa.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnMapa.setBackground(Color.BLUE);
+        btnMapa.setBackground(Color.LIGHT_GRAY);
         btnMapa.setBounds(24, 178, 68, 24);
         panelRegistro.add(btnMapa);
         
@@ -141,24 +141,9 @@ public class VentanaAuto extends JFrame{
         					JOptionPane.showMessageDialog(null, "Localidad ya ingresada.");
         				} else {
         					VentanaRegistroControlador.registrarLocalidad(local);
-        					{
-        						panelRegistro2 = new swing.PanelBorder();
-        						panelRegistro2.setBounds(330, 394, 230, 133);
-        						panelGradiente1.add(panelRegistro2);
-        						panelRegistro2.setBackground(new java.awt.Color(255, 255, 255));
-        						panelGradiente1.setLayer(panelRegistro2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        						JTextArea txtrSeRegistr = new JTextArea();
-        						txtrSeRegistr.setEditable(false);
-        						txtrSeRegistr.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        						txtrSeRegistr.setText("Se registr\u00F3: \r\n" + local.getNombre() + ", " + local.getProvincia() + 
-        								"\r\nCon las coordenadas: \r\n" + "Latitud " + local.getLatitud() 
-        								+ "\r\nLongitud " + local.getLongitud());
-        						txtrSeRegistr.setBounds(10, 11, 210, 111);
-        						panelRegistro2.add(txtrSeRegistr);
-        					}
+        					aniadirInfo(local);
         					aniadirExito();
-        					limpiarFields();
+//        					limpiarFields();
         				}
         			}
         		} else {
@@ -177,7 +162,22 @@ public class VentanaAuto extends JFrame{
 			}
         });
 	}
+	private void aniadirInfo(Localidad local) {
+		panelRegistro2 = new swing.PanelBorder();
+		panelRegistro2.setBounds(330, 394, 230, 133);
+		panelGradiente1.add(panelRegistro2);
+		panelRegistro2.setBackground(new java.awt.Color(255, 255, 255));
+		panelGradiente1.setLayer(panelRegistro2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+		JTextArea txtrSeRegistr = new JTextArea();
+		txtrSeRegistr.setEditable(false);
+		txtrSeRegistr.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtrSeRegistr.setText("Se registr\u00F3: \r\n" + local.getNombre() + ", " + local.getProvincia() + 
+				"\r\nCon las coordenadas: \r\n" + "Latitud " + local.getLatitud() 
+				+ "\r\nLongitud " + local.getLongitud());
+		txtrSeRegistr.setBounds(10, 11, 210, 111);
+		panelRegistro2.add(txtrSeRegistr);
+	}
 	private void aniadirExito() {
 		JLabel lblExito = new JLabel("\u00A1Localidad registrada con éxito!");
 		lblExito.setHorizontalAlignment(SwingConstants.LEFT);
