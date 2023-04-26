@@ -12,6 +12,7 @@ import javax.swing.GroupLayout.Alignment;
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
 import gSon.Localidad;
+import sistema.Registro;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -25,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.List;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -38,6 +40,7 @@ public class VentanaAuto extends JFrame{
 	private String localidad;
 	private File imagen;
 	private Image icono;
+	private List<Localidad> listaLocalidades;
 	private PanelGradiente panelGradiente1;
 	private PanelBorder panelRegistro;
 	private PanelBorder panelRegistro2;
@@ -48,6 +51,7 @@ public class VentanaAuto extends JFrame{
 	}
 
 	public void initialize() {
+		listaLocalidades = Registro.getListaLocalidades().getLista();
 		setBounds(100, 100, 900, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Cargar icono y titulo de ventana
@@ -137,7 +141,7 @@ public class VentanaAuto extends JFrame{
         		if (!localidad.isBlank()) {
         			Localidad local = VentanaRegistroControlador.buscarPorNombre(localidad);
         			if (local != null) {
-        				if (VentanaRegistroControlador.yaIngresada(local)) {
+        				if (yaIngresada(local, listaLocalidades)) {
         					JOptionPane.showMessageDialog(null, "Localidad ya ingresada.");
         				} else {
         					VentanaRegistroControlador.registrarLocalidad(local);
@@ -161,6 +165,14 @@ public class VentanaAuto extends JFrame{
 				VentanaRegistroControlador.cerrarAuto();
 			}
         });
+	}
+	private boolean yaIngresada(Localidad localidad, List<Localidad> localidades) {
+	    for (Localidad local : localidades) {
+	    	if (localidad.getLatitud() == (local.getLatitud()) && localidad.getLongitud() == (local.getLongitud())) {
+	    		return true;
+	    	}
+	    }
+	    return false;
 	}
 	private void aniadirInfo(Localidad local) {
 		panelRegistro2 = new swing.PanelBorder();

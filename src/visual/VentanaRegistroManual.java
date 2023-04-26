@@ -12,6 +12,7 @@ import javax.swing.GroupLayout.Alignment;
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
 import gSon.Localidad;
+import sistema.Registro;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -23,6 +24,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -31,12 +33,14 @@ import java.awt.Cursor;
 
 @SuppressWarnings("serial")
 public class VentanaRegistroManual extends JFrame{
+	private JFrame frame;
 	private String localidad;
 	private String provincia;
 	private double latitud;
 	private double longitud;
 	private File imagen;
 	private Image icono;
+	private List<Localidad> listaLocalidades;
 	private PanelGradiente panelGradiente1;
 	private PanelBorder panelRegistro;
 	private JTextField usrLocalidad;
@@ -49,19 +53,21 @@ public class VentanaRegistroManual extends JFrame{
 	}
 
 	public void initialize() {
-		setBounds(100, 100, 900, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		listaLocalidades = Registro.getListaLocalidades().getLista();
+		frame = new JFrame();
+		frame.setBounds(100, 100, 900, 600);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Cargar icono y titulo de ventana
 		try {
 			imagen = new File("imagenes\\icono.png");
 			icono = ImageIO.read(imagen);
-			setIconImage(icono);
+			frame.setIconImage(icono);
 		} catch (Exception e) {
 			System.out.println("Error cargando imagen: " + e.getMessage());
 		}
-		setTitle("ConectAR");
-		setLocationRelativeTo(null); //Centra la ventana en pantalla
-		setResizable(false);
+		frame.setTitle("ConectAR");
+		frame.setLocationRelativeTo(null); //Centra la ventana en pantalla
+		frame.setResizable(false);
 		
 		panelGradiente1 = new swing.PanelGradiente();
 		panelRegistro = new swing.PanelBorder();
@@ -71,7 +77,7 @@ public class VentanaRegistroManual extends JFrame{
         
         panelRegistro.setBackground(new java.awt.Color(255, 255, 255));
         
-        getContentPane().add(panelGradiente1, BorderLayout.CENTER);
+        frame.getContentPane().add(panelGradiente1, BorderLayout.CENTER);
 
         panelGradiente1.setLayer(panelRegistro, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
@@ -164,7 +170,7 @@ public class VentanaRegistroManual extends JFrame{
 				localidad = usrLocalidad.getText();
 				provincia = usrProvincia.getText();
 				Localidad local = VentanaRegistroControlador.generarLocalidad(localidad, provincia, latitud, longitud);
-				if (VentanaRegistroControlador.yaIngresada(local)) {
+				if (yaIngresada(local, listaLocalidades)) {
 					JOptionPane.showMessageDialog(null, "Localidad ya ingresada.");
 				} else {
 					if (verificarDatos()) {
@@ -183,6 +189,14 @@ public class VentanaRegistroManual extends JFrame{
 				VentanaRegistroControlador.cerrarManual();
 			}
         });
+	}
+	private boolean yaIngresada(Localidad localidad, List<Localidad> localidades) {
+	    for (Localidad local : localidades) {
+	    	if (localidad.getLatitud() == (local.getLatitud()) && localidad.getLongitud() == (local.getLongitud())) {
+	    		return true;
+	    	}
+	    }
+	    return false;
 	}
 	private void aniadirExito() {
         JLabel lblExito = new JLabel("\u00A1Localidad registrada con éxito!");

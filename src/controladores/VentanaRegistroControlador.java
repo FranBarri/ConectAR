@@ -1,18 +1,37 @@
 package controladores;
 
+import java.awt.EventQueue;
+
 import gSon.Localidad;
 import sistema.Geonames;
 import sistema.Registro;
 import visual.VentanaAuto;
+import visual.VentanaMapa;
 import visual.VentanaRegistroManual;
 
 public class VentanaRegistroControlador {
 	
 	
-	public static VentanaRegistroManual ventanaRegistroManual = new VentanaRegistroManual();
-	public static VentanaAuto ventanaAuto = new VentanaAuto();
+	public static VentanaAuto ventanaAuto;
+	public static VentanaRegistroManual ventanaRegistroManual;
 	
+	public VentanaRegistroControlador() {
+		inicializarVentanaRegistro();
+	}
 	
+	private static void inicializarVentanaRegistro() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ventanaAuto = new VentanaAuto();
+					mostrarAuto();
+					ventanaRegistroManual = new VentanaRegistroManual();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	public static void cerrarManual() {
 		ventanaRegistroManual.setVisible(false);
 	}
@@ -33,9 +52,6 @@ public class VentanaRegistroControlador {
 	
 	public static void registrarLocalidad(Localidad localidad) {
 		Registro.registrarLocalidad(localidad);
-	}
-	public static boolean yaIngresada(Localidad nombre) {
-		return Registro.yaIngresada(nombre);
 	}
 	public static Localidad buscarPorNombre(String nombre) {
 		try {

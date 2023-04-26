@@ -5,10 +5,15 @@ import javax.swing.*;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
+import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
+import gSon.Localidad;
+import sistema.Registro;
 import swing.PanelGradiente;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,24 +24,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class VentanaMapa extends JFrame{
-	
 	private PanelGradiente panelGradiente1;
 	private JMapViewer mapa;
+	private JMapViewer mapaAGM;
+	private List<Localidad> listaLocalidades;
 	private ArrayList<MapMarker> marcas;
+//	private ArrayList<MapPolygon> aristas;
 	private File imagen;
 	private Image icono;
 	
 	public VentanaMapa() {
-		iniciar();
+		initialize();
 	}
 
-	//Preguntar por borrando puntos que se agregan en una sesion, pero los ya guardados no se borran
-	//y mapa volviendo a sus coords previas cuando registro y vuelvo a mapa
-	public void iniciar() {
+	public void initialize() {
+		listaLocalidades = Registro.getListaLocalidades().getLista();
 		marcas = new ArrayList<MapMarker>();
+//		aristas = new ArrayList<MapPolygon>();
 		setBounds(100, 100, 900, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
@@ -70,6 +78,12 @@ public class VentanaMapa extends JFrame{
         panel.add(mapa);
         mapa.setZoomControlsVisible(false);
 		
+        Coordinate coord = new Coordinate(-33.416097, -63.616672);
+		crearVertices(marcas, listaLocalidades);
+		cargarVertices(mapa, marcas);
+		mapa.setDisplayPosition(coord, 5);
+
+		
 		JButton btnRegistro = new JButton("Nueva Localidad");
 		btnRegistro.setForeground(new Color(0, 0, 0));
 		btnRegistro.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -95,15 +109,38 @@ public class VentanaMapa extends JFrame{
         btnCalcular.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnCalcular.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		VentanaMapaControlador.armarSistemaDeLineas(mapa);
+        		mapaAGM = mapa;
+        		mapaAGM = mostrarAristas(mapa, listaLocalidades);
+        		panel.remove(mapa);
+        		panel.add(mapaAGM);
         	}
         });
-        
-        mapa.repaint();
-		VentanaMapaControlador.crearVertices(marcas);
-		VentanaMapaControlador.cargarVertices(mapa, marcas);
-		
-        Coordinate coord = new Coordinate(-33.416097, -63.616672);
-		mapa.setDisplayPosition(coord, 5);
+	}
+	
+	private JMapViewer mostrarAristas(JMapViewer mapa, List<Localidad> localidades) {
+		ArrayList<Coordinate> coords = new ArrayList<>();
+		JMapViewer mapaRet = mapa;
+	    for (Localidad local : localidades) {
+	    	coords.add(new Coordinate(local.getLatitud(), local.getLongitud()));
+	    	MapPolygon polygon = new MapPolygonImpl(coords);
+	    	polygon.getStyle().setBackColor(null);
+	    	polygon.getStyle().setColor(Color.BLUE);
+			mapaRet.addMapPolygon(polygon);
+	    }
+	    return mapaRet;
+	}
+	public void crearVertices(ArrayList<MapMarker> marcas, List<Localidad> localidades) {
+	    for (Localidad localidad : localidades) {
+	    	Coordinate coordenadas = new Coordinate(localidad.getLatitud(), localidad.getLongitud());
+			MapMarker marca = new MapMarkerDot(localidad.getNombre(), coordenadas);
+	    	marcas.add(marca);
+	    }
+	}
+	public void cargarVertices(JMapViewer mapa, ArrayList<MapMarker> marcas) {
+//		JMapViewer mapaRet = mapa;
+		for (MapMarker marca : marcas) {
+			mapa.addMapMarker(marca);			
+		}
+//		return mapaRet;
 	}
 }
