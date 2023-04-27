@@ -6,9 +6,6 @@ import swing.PanelBorder;
 import swing.PanelGradiente;
 
 import javax.imageio.ImageIO;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
 import gSon.Localidad;
@@ -33,7 +30,6 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.JTextArea;
-import javax.swing.DropMode;
 
 @SuppressWarnings("serial")
 public class VentanaAuto extends JFrame{

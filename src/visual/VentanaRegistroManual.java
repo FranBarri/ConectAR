@@ -33,7 +33,6 @@ import java.awt.Cursor;
 
 @SuppressWarnings("serial")
 public class VentanaRegistroManual extends JFrame{
-	private JFrame frame;
 	private String localidad;
 	private String provincia;
 	private double latitud;
@@ -54,20 +53,19 @@ public class VentanaRegistroManual extends JFrame{
 
 	public void initialize() {
 		listaLocalidades = Registro.getListaLocalidades().getLista();
-		frame = new JFrame();
-		frame.setBounds(100, 100, 900, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 900, 600);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Cargar icono y titulo de ventana
 		try {
 			imagen = new File("imagenes\\icono.png");
 			icono = ImageIO.read(imagen);
-			frame.setIconImage(icono);
+			setIconImage(icono);
 		} catch (Exception e) {
 			System.out.println("Error cargando imagen: " + e.getMessage());
 		}
-		frame.setTitle("ConectAR");
-		frame.setLocationRelativeTo(null); //Centra la ventana en pantalla
-		frame.setResizable(false);
+		setTitle("ConectAR");
+		setLocationRelativeTo(null); //Centra la ventana en pantalla
+		setResizable(false);
 		
 		panelGradiente1 = new swing.PanelGradiente();
 		panelRegistro = new swing.PanelBorder();
@@ -77,7 +75,7 @@ public class VentanaRegistroManual extends JFrame{
         
         panelRegistro.setBackground(new java.awt.Color(255, 255, 255));
         
-        frame.getContentPane().add(panelGradiente1, BorderLayout.CENTER);
+        getContentPane().add(panelGradiente1, BorderLayout.CENTER);
 
         panelGradiente1.setLayer(panelRegistro, javax.swing.JLayeredPane.DEFAULT_LAYER);
         

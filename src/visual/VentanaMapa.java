@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import swing.PanelBorder;
 
 @SuppressWarnings("serial")
 public class VentanaMapa extends JFrame{
@@ -67,80 +68,116 @@ public class VentanaMapa extends JFrame{
         panelGradiente1.setBounds(0, 0, 900, 600);
 
         getContentPane().add(panelGradiente1, BorderLayout.CENTER);
-				
-        JPanel panel = new JPanel();
-        panel.setBounds(10, 11, 862, 481);
-        panelGradiente1.add(panel);
-        panel.setLayout(null);
+		
+        PanelBorder panelMapa = new PanelBorder();
+        panelMapa.setLayout(null);
+        panelMapa.setBackground(Color.WHITE);
+        panelMapa.setBounds(10, 11, 862, 488);
+        panelGradiente1.add(panelMapa);
         
         mapa = new JMapViewer();
-        mapa.setBounds(10, 11, 842, 459);
-        panel.add(mapa);
+        mapa.setBounds(10, 11, 842, 316);
+        panelMapa.add(mapa);
         mapa.setZoomControlsVisible(false);
-		
         Coordinate coord = new Coordinate(-33.416097, -63.616672);
-		crearVertices(marcas, listaLocalidades);
-		cargarVertices(mapa, marcas);
-		mapa.setDisplayPosition(coord, 5);
-
-		
-		JButton btnRegistro = new JButton("Nueva Localidad");
-		btnRegistro.setForeground(new Color(0, 0, 0));
-		btnRegistro.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnRegistro.setBackground(Color.LIGHT_GRAY);
-		btnRegistro.setBounds(10, 525, 119, 24);
-		panelGradiente1.add(btnRegistro);
-		
-		JButton btnCalcular = new JButton("Calcular");
-		btnCalcular.setForeground(Color.BLACK);
-		btnCalcular.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnCalcular.setBackground(Color.LIGHT_GRAY);
-		btnCalcular.setBounds(799, 527, 73, 24);
-		panelGradiente1.add(btnCalcular);
-		
+		Disenio.crearVertices(marcas, listaLocalidades);
+        Disenio.cargarVertices(mapa, marcas);
+        
+        JLabel lblCostoTotal = new JLabel("Costo Total");
+        lblCostoTotal.setHorizontalAlignment(SwingConstants.CENTER);
+        lblCostoTotal.setFont(new Font("Tahoma", Font.BOLD, 25));
+        lblCostoTotal.setBounds(10, 338, 842, 37);
+        panelMapa.add(lblCostoTotal);
+        
+        JLabel lblCostoKM = new JLabel("Costo por KM");
+        lblCostoKM.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        lblCostoKM.setBounds(20, 370, 176, 20);
+        panelMapa.add(lblCostoKM);
+        
+        JLabel lblCambio = new JLabel("Cambio");
+        lblCambio.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        lblCambio.setBounds(20, 432, 142, 17);
+        panelMapa.add(lblCambio);
+        
+        JLabel lblTotal = new JLabel("Total");
+        lblTotal.setFont(new Font("Tahoma", Font.BOLD, 20));
+        lblTotal.setBounds(20, 458, 95, 28);
+        panelMapa.add(lblTotal);
+        
+        JPanel panel_1 = new JPanel();
+        panel_1.setBackground(Color.BLACK);
+        panel_1.setBounds(10, 454, 842, 3);
+        panelMapa.add(panel_1);
+        
+        JTextArea txtrPorcentajeTenerMs = new JTextArea();
+        txtrPorcentajeTenerMs.setText("Porcentaje tener \r\nm\u00E1s de 300 KM");
+        txtrPorcentajeTenerMs.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        txtrPorcentajeTenerMs.setEditable(false);
+        txtrPorcentajeTenerMs.setBounds(18, 390, 128, 39);
+        panelMapa.add(txtrPorcentajeTenerMs);
+        
+        JLabel lblPrecioKM = new JLabel("$ 0");
+        lblPrecioKM.setHorizontalAlignment(SwingConstants.TRAILING);
+        lblPrecioKM.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        lblPrecioKM.setBounds(153, 374, 699, 14);
+        panelMapa.add(lblPrecioKM);
+        
+        JLabel lblPrecioPorcentaje = new JLabel("% 0");
+        lblPrecioPorcentaje.setHorizontalAlignment(SwingConstants.TRAILING);
+        lblPrecioPorcentaje.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        lblPrecioPorcentaje.setBounds(153, 405, 699, 14);
+        panelMapa.add(lblPrecioPorcentaje);
+        
+        JLabel lblPrecioCambio = new JLabel("$ 0");
+        lblPrecioCambio.setHorizontalAlignment(SwingConstants.TRAILING);
+        lblPrecioCambio.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        lblPrecioCambio.setBounds(153, 432, 699, 14);
+        panelMapa.add(lblPrecioCambio);
+        
+        JLabel lblPrecioTotal = new JLabel("$ 0");
+        lblPrecioTotal.setHorizontalAlignment(SwingConstants.TRAILING);
+        lblPrecioTotal.setFont(new Font("Tahoma", Font.BOLD, 20));
+        lblPrecioTotal.setBounds(167, 458, 685, 28);
+        panelMapa.add(lblPrecioTotal);
+        mapa.setDisplayPosition(coord, 5);
+        
+        JButton btnCambio = new JButton("Cambio");
+        btnCambio.setForeground(Color.BLACK);
+        btnCambio.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnCambio.setBackground(Color.LIGHT_GRAY);
+        btnCambio.setBounds(652, 527, 119, 24);
+        panelGradiente1.add(btnCambio);
+        
+        JButton btnRegistro = new JButton("Nueva Localidad");
+        btnRegistro.setForeground(new Color(0, 0, 0));
+        btnRegistro.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnRegistro.setBackground(Color.LIGHT_GRAY);
+        btnRegistro.setBounds(10, 525, 119, 24);
+        panelGradiente1.add(btnRegistro);
+        
+        JButton btnCalcular = new JButton("Calcular");
+        btnCalcular.setForeground(Color.BLACK);
+        btnCalcular.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnCalcular.setBackground(Color.LIGHT_GRAY);
+        btnCalcular.setBounds(799, 527, 73, 24);
+        panelGradiente1.add(btnCalcular);
+        
         btnRegistro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnRegistro.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-				VentanaRegistroControlador.mostrarAuto();
-				VentanaMapaControlador.cerrar();
-			}
+        		VentanaRegistroControlador.mostrarAuto();
+        		VentanaMapaControlador.cerrar();
+        	}
         });
         
         btnCalcular.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnCalcular.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		mapaAGM = mapa;
-        		mapaAGM = mostrarAristas(mapa, listaLocalidades);
-        		panel.remove(mapa);
-        		panel.add(mapaAGM);
+        		mapaAGM = Disenio.mostrarAristasAGM(mapa, listaLocalidades);
+        		panelMapa.remove(mapa);
+        		panelMapa.add(mapaAGM);
         	}
         });
-	}
-	
-	private JMapViewer mostrarAristas(JMapViewer mapa, List<Localidad> localidades) {
-		ArrayList<Coordinate> coords = new ArrayList<>();
-		JMapViewer mapaRet = mapa;
-	    for (Localidad local : localidades) {
-	    	coords.add(new Coordinate(local.getLatitud(), local.getLongitud()));
-	    	MapPolygon polygon = new MapPolygonImpl(coords);
-	    	polygon.getStyle().setBackColor(null);
-	    	polygon.getStyle().setColor(Color.BLUE);
-			mapaRet.addMapPolygon(polygon);
-	    }
-	    return mapaRet;
-	}
-	public void crearVertices(ArrayList<MapMarker> marcas, List<Localidad> localidades) {
-	    for (Localidad localidad : localidades) {
-	    	Coordinate coordenadas = new Coordinate(localidad.getLatitud(), localidad.getLongitud());
-			MapMarker marca = new MapMarkerDot(localidad.getNombre(), coordenadas);
-	    	marcas.add(marca);
-	    }
-	}
-	public void cargarVertices(JMapViewer mapa, ArrayList<MapMarker> marcas) {
-//		JMapViewer mapaRet = mapa;
-		for (MapMarker marca : marcas) {
-			mapa.addMapMarker(marca);			
-		}
-//		return mapaRet;
 	}
 }

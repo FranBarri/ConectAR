@@ -41,6 +41,12 @@
       "provincia": "Cordoba",
       "latitud": -31.4135,
       "longitud": -64.18105
+    },
+    {
+      "nombre": "Mercedes Airport",
+      "provincia": "Corrientes",
+      "latitud": -29.2214,
+      "longitud": -58.0878
     }
   ]
 }
