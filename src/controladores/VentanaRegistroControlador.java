@@ -1,12 +1,12 @@
 package controladores;
 
 import java.awt.EventQueue;
+import java.util.List;
 
 import gSon.Localidad;
 import sistema.Geonames;
 import sistema.Registro;
 import visual.VentanaAuto;
-import visual.VentanaMapa;
 import visual.VentanaRegistroManual;
 
 public class VentanaRegistroControlador {
@@ -49,9 +49,17 @@ public class VentanaRegistroControlador {
 	public static Localidad generarLocalidad(String nombre, String provincia, double latitud, double longitud) {
 		return Registro.generarLocalidad(nombre, provincia, latitud, longitud);
 	}
-	
-	public static void registrarLocalidad(Localidad localidad) {
-		Registro.registrarLocalidad(localidad);
+	public static List<Localidad> getLista() {
+		return Registro.getLista();
+	}
+	public static List<Localidad> registrarLocalidad(Localidad localidad) {
+		return Registro.registrarLocalidad(localidad);
+	}
+	public static List<Localidad> eliminarLocalidad(String localidad) {
+		return Registro.eliminarLocalidad(localidad);
+	}
+	public static void guardarJson(List<Localidad> localidades) {
+		Registro.guardarJson(localidades);
 	}
 	public static Localidad buscarPorNombre(String nombre) {
 		try {

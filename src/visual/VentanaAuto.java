@@ -9,8 +9,6 @@ import javax.imageio.ImageIO;
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
 import gSon.Localidad;
-import sistema.Registro;
-
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -36,7 +34,9 @@ public class VentanaAuto extends JFrame{
 	private String localidad;
 	private File imagen;
 	private Image icono;
-	private List<Localidad> listaLocalidades;
+	private boolean info;
+	private static List<Localidad> listaLocalidades;
+	private JLabel lblExito;
 	private PanelGradiente panelGradiente1;
 	private PanelBorder panelRegistro;
 	private PanelBorder panelRegistro2;
@@ -47,7 +47,9 @@ public class VentanaAuto extends JFrame{
 	}
 
 	public void initialize() {
-		listaLocalidades = Registro.getListaLocalidades().getLista();
+		lblExito = new JLabel();
+		listaLocalidades = VentanaRegistroControlador.getLista();
+		info = false;
 		setBounds(100, 100, 900, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Cargar icono y titulo de ventana
@@ -134,16 +136,20 @@ public class VentanaAuto extends JFrame{
         btnRegistrar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		localidad = usrLocalidad.getText();
+        		panelRegistro.remove(lblExito);
         		if (!localidad.isBlank()) {
         			Localidad local = VentanaRegistroControlador.buscarPorNombre(localidad);
         			if (local != null) {
         				if (yaIngresada(local, listaLocalidades)) {
         					JOptionPane.showMessageDialog(null, "Localidad ya ingresada.");
         				} else {
-        					VentanaRegistroControlador.registrarLocalidad(local);
+        					listaLocalidades = VentanaRegistroControlador.registrarLocalidad(local);
+        					if (info) {
+        						panelGradiente1.remove(panelRegistro2);
+        					}
         					aniadirInfo(local);
         					aniadirExito();
-//        					limpiarFields();
+        					limpiarFields();
         				}
         			}
         		} else {
@@ -171,6 +177,7 @@ public class VentanaAuto extends JFrame{
 	    return false;
 	}
 	private void aniadirInfo(Localidad local) {
+		info = true;
 		panelRegistro2 = new swing.PanelBorder();
 		panelRegistro2.setBounds(330, 394, 230, 133);
 		panelGradiente1.add(panelRegistro2);
@@ -187,7 +194,7 @@ public class VentanaAuto extends JFrame{
 		panelRegistro2.add(txtrSeRegistr);
 	}
 	private void aniadirExito() {
-		JLabel lblExito = new JLabel("\u00A1Localidad registrada con éxito!");
+		lblExito = new JLabel("\u00A1Localidad registrada con éxito!");
 		lblExito.setHorizontalAlignment(SwingConstants.LEFT);
 		lblExito.setForeground(new Color(0, 128, 0));
 		lblExito.setFont(new Font("Tahoma", Font.PLAIN, 11));

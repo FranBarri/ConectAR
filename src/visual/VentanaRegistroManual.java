@@ -12,7 +12,6 @@ import javax.swing.GroupLayout.Alignment;
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
 import gSon.Localidad;
-import sistema.Registro;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -40,6 +39,7 @@ public class VentanaRegistroManual extends JFrame{
 	private File imagen;
 	private Image icono;
 	private List<Localidad> listaLocalidades;
+	private JLabel lblExito;
 	private PanelGradiente panelGradiente1;
 	private PanelBorder panelRegistro;
 	private JTextField usrLocalidad;
@@ -52,7 +52,8 @@ public class VentanaRegistroManual extends JFrame{
 	}
 
 	public void initialize() {
-		listaLocalidades = Registro.getListaLocalidades().getLista();
+		lblExito = new JLabel();
+		listaLocalidades = VentanaRegistroControlador.getLista();
 		setBounds(100, 100, 900, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Cargar icono y titulo de ventana
@@ -167,14 +168,15 @@ public class VentanaRegistroManual extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				localidad = usrLocalidad.getText();
 				provincia = usrProvincia.getText();
+				panelRegistro.remove(lblExito);
 				Localidad local = VentanaRegistroControlador.generarLocalidad(localidad, provincia, latitud, longitud);
 				if (yaIngresada(local, listaLocalidades)) {
 					JOptionPane.showMessageDialog(null, "Localidad ya ingresada.");
 				} else {
 					if (verificarDatos()) {
-						VentanaRegistroControlador.registrarLocalidad(local);
-						aniadirExito();
-						limpiarFields();
+    					listaLocalidades = VentanaRegistroControlador.registrarLocalidad(local);
+    					aniadirExito();
+    					limpiarFields();
 					}
 				}
 			}
