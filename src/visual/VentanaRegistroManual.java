@@ -11,7 +11,7 @@ import javax.swing.GroupLayout.Alignment;
 
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
-import gSon.Localidad;
+import sistema.Localidad;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;

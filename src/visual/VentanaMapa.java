@@ -6,9 +6,12 @@ import javax.swing.*;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
+
+import controladores.DisenioMapa;
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
-import gSon.Localidad;
+import sistema.Conexion;
+import sistema.Localidad;
 import swing.PanelGradiente;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,6 +21,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import swing.PanelBorder;
@@ -29,8 +33,8 @@ public class VentanaMapa extends JFrame{
 	private JMapViewer mapaAGM;
 	private JPanel panel;
 	private List<Localidad> listaLocalidades;
+	private List<Conexion> conexiones;
 	private ArrayList<MapMarker> marcas;
-//	private ArrayList<MapPolygon> aristas;
 	private boolean cambios;
 	private String mensaje;
 	private File imagen;
@@ -43,6 +47,7 @@ public class VentanaMapa extends JFrame{
 	public void initialize() {
 		listaLocalidades = VentanaRegistroControlador.getLista();
 		marcas = new ArrayList<MapMarker>();
+		conexiones = new ArrayList<Conexion>();
 		cambios = false;
 		mensaje = "";
 //		aristas = new ArrayList<MapPolygon>();
@@ -80,8 +85,8 @@ public class VentanaMapa extends JFrame{
         panelMapa.add(mapa);
         mapa.setZoomControlsVisible(false);
         Coordinate coord = new Coordinate(-33.416097, -63.616672);
-		Disenio.crearVertices(marcas, listaLocalidades);
-        Disenio.cargarVertices(mapa, marcas);
+		DisenioMapa.crearVertices(marcas, listaLocalidades);
+        DisenioMapa.cargarVertices(mapa, marcas);
         
         JLabel lblCostoTotal = new JLabel("Costo Total");
         lblCostoTotal.setHorizontalAlignment(SwingConstants.CENTER);
@@ -94,9 +99,9 @@ public class VentanaMapa extends JFrame{
         lblCostoKM.setBounds(20, 362, 176, 20);
         panelMapa.add(lblCostoKM);
         
-        JLabel lblCambio = new JLabel("Cambio");
+        JLabel lblCambio = new JLabel("Costo Fijo entre Provincias");
         lblCambio.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        lblCambio.setBounds(20, 432, 142, 17);
+        lblCambio.setBounds(20, 432, 176, 17);
         panelMapa.add(lblCambio);
         
         JLabel lblTotal = new JLabel("Total");
@@ -110,7 +115,7 @@ public class VentanaMapa extends JFrame{
         panelMapa.add(panel_1);
         
         JTextArea txtrPorcentajeTenerMs = new JTextArea();
-        txtrPorcentajeTenerMs.setText("Porcentaje tener \r\nm\u00E1s de 300 KM");
+        txtrPorcentajeTenerMs.setText("Costo con \r\nAumento");
         txtrPorcentajeTenerMs.setFont(new Font("Tahoma", Font.PLAIN, 15));
         txtrPorcentajeTenerMs.setEditable(false);
         txtrPorcentajeTenerMs.setBounds(18, 386, 128, 39);
@@ -122,7 +127,7 @@ public class VentanaMapa extends JFrame{
         lblPrecioKM.setBounds(737, 366, 105, 14);
         panelMapa.add(lblPrecioKM);
         
-        JLabel lblPrecioPorcentaje = new JLabel("% 0");
+        JLabel lblPrecioPorcentaje = new JLabel("$ 0");
         lblPrecioPorcentaje.setHorizontalAlignment(SwingConstants.TRAILING);
         lblPrecioPorcentaje.setFont(new Font("Tahoma", Font.PLAIN, 15));
         lblPrecioPorcentaje.setBounds(737, 400, 105, 14);
@@ -205,8 +210,8 @@ public class VentanaMapa extends JFrame{
         			marcas.clear();
         			mapa.removeAllMapPolygons();
         			mapa.removeAllMapMarkers();
-        			Disenio.crearVertices(marcas, listaLocalidades);
-        			Disenio.cargarVertices(mapa, marcas);        			
+        			DisenioMapa.crearVertices(marcas, listaLocalidades);
+        			DisenioMapa.cargarVertices(mapa, marcas);        			
         		}
         	}
         });
@@ -215,8 +220,8 @@ public class VentanaMapa extends JFrame{
         	public void actionPerformed(ActionEvent e) {
         		mapa.removeAllMapMarkers();
         		listaLocalidades = VentanaRegistroControlador.getLista();
-        		Disenio.crearVertices(marcas, listaLocalidades);
-                Disenio.cargarVertices(mapa, marcas);
+        		DisenioMapa.crearVertices(marcas, listaLocalidades);
+                DisenioMapa.cargarVertices(mapa, marcas);
         	}
         });
         
@@ -234,18 +239,27 @@ public class VentanaMapa extends JFrame{
         btnCalcular.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		cambios = true;
+        		conexiones = DisenioMapa.crearConexiones(listaLocalidades);
         		mapa.removeAllMapPolygons();
         		mapaAGM = mapa;
-        		mapaAGM = Disenio.mostrarAristasAGM(mapa, listaLocalidades);
+//        		mapaAGM = DisenioMapa.mostrarAristas(mapaAGM, listaLocalidades);
+        		mapaAGM = DisenioMapa.mostrarAGM(mapaAGM, listaLocalidades, conexiones);
         		panelMapa.remove(mapa);
         		panelMapa.add(mapaAGM);
+        		//Esta bien esta forma de mostrar los costos? O tendria que ser de forma individual?
+        		DecimalFormat df = new DecimalFormat("#.##");
+        		lblPrecioKM.setText("$ " + df.format(DisenioMapa.mostrarCostoPorKM(listaLocalidades, conexiones)));
+        		lblPrecioPorcentaje.setText("$ " + df.format(DisenioMapa.mostrarCostoConAumento(listaLocalidades, conexiones)));
+        		lblPrecioCambio.setText("$ " + df.format(DisenioMapa.mostrarCostoFijo(listaLocalidades, conexiones)));
+        		lblPrecioTotal.setText("$ " + df.format(DisenioMapa.mostrarCostoTotal(listaLocalidades, conexiones)));
+        		
         	}
         });
 
 	}
 	private void agregarExito(String mensaje) {
         panel = new JPanel();
-        panel.setBounds(20, 502, 210, 20);
+        panel.setBounds(20, 502, 200, 20);
         panelGradiente1.add(panel);
         panel.setLayout(null);
         
@@ -255,7 +269,7 @@ public class VentanaMapa extends JFrame{
         textArea.setEditable(false);
         panel.add(textArea);
         if (mensaje == "eliminado") {
-        	textArea.setText("¡Eliminada la localidad con éxito!");
+        	textArea.setText("¡Localidad eliminada con éxito!");
         }
         if (mensaje == "guardado") {
             panel.setBounds(20, 502, 180, 20);

@@ -9,8 +9,6 @@ import org.geonames.ToponymSearchCriteria;
 import org.geonames.ToponymSearchResult;
 import org.geonames.WebService;
 
-import gSon.Localidad;
-
 public class Geonames {
 	public static Localidad buscarPorNombre(String nombre) throws InvalidParameterException {
 		WebService.setUserName("franbarri");

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import sistema.Localidad;
+
 public class ListaLocalidades implements Serializable {
     private static final long serialVersionUID = 1L;
     private LinkedList<Localidad> lista;

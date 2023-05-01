@@ -1,88 +1,64 @@
 package sistema;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
-import java.util.Arrays;
+public class Kruskal {
 
-class Kruskal{
-	class Edge implements Comparable<Edge> {
-		public int src, dest, weight;
+    private static class Subset {
+        int parent;
+        int rank;
+    }
 
-		public int compareTo(Edge compareEdge) {
-			return this.weight - compareEdge.weight;
-		}
-	};
+    private static int find(Subset[] subsets, int i) {
+        if (subsets[i].parent != i) {
+            subsets[i].parent = find(subsets, subsets[i].parent);
+        }
+        return subsets[i].parent;
+    }
 
-	class subset
-	{
-		int parent, rank;
-	};
+    private static void union(Subset[] subsets, int x, int y) {
+        int xroot = find(subsets, x);
+        int yroot = find(subsets, y);
 
-	int V, E;    
-	Edge edge[];
-	public Kruskal(int v, int e)
-	{
-		V = v;
-		E = e;
-		edge = new Edge[E];
-		for (int i=0; i<e; ++i)
-			edge[i] = new Edge();
-	}
-	int find(subset subsets[], int i)
-	{
-		if (subsets[i].parent != i)
-			subsets[i].parent = find(subsets, subsets[i].parent);
+        if (subsets[xroot].rank < subsets[yroot].rank) {
+            subsets[xroot].parent = yroot;
+        } else if (subsets[xroot].rank > subsets[yroot].rank) {
+            subsets[yroot].parent = xroot;
+        } else {
+            subsets[yroot].parent = xroot;
+            subsets[xroot].rank++;
+        }
+    }
+    
+    //Usar este metodo para el boton calcular
+    public static List<Conexion> arbolGeneradorMinimo(List<Localidad> localidades, List<Conexion> conexiones) {
+        List<Conexion> resultado = new ArrayList<>();
 
-		return subsets[i].parent;
-	}
-	void Union(subset subsets[], int x, int y)
-	{
-		int xroot = find(subsets, x);
-		int yroot = find(subsets, y);
-		if (subsets[xroot].rank < subsets[yroot].rank)
-			subsets[xroot].parent = yroot;
-		else if (subsets[xroot].rank > subsets[yroot].rank)
-			subsets[yroot].parent = xroot;
-		else
-		{
-			subsets[yroot].parent = xroot;
-			subsets[xroot].rank++;
-		}
-	}
-	// The main function to construct MST using Kruskal's algorithm
-	void KruskalMST()
-	{
-		Edge result[] = new Edge[V];  
-		int e = 0;  
-		int i = 0; 
-		for (i=0; i<V; ++i)
-			Arrays.sort(edge);
-		subset subsets[] = new subset[V];
-		for(i=0; i<V; ++i)
-			subsets[i]=new subset();
-		for (int v = 0; v < V; ++v)
-		{
-			subsets[v].parent = v;
-			subsets[v].rank = 0;
-		}
-		i = 0; 
-		while (e < V - 1)
-		{
-			Edge next_edge = new Edge();
-			next_edge = edge[i++];
+        conexiones.sort(Comparator.comparingDouble(Conexion::calcularCosto));
 
-			int x = find(subsets, next_edge.src);
-			int y = find(subsets, next_edge.dest);
-			if (x != y)
-			{
-				result[e++] = next_edge;
-				Union(subsets, x, y);
-			}
+        Subset[] subsets = new Subset[localidades.size()];
+        for (int i = 0; i < localidades.size(); ++i) {
+            subsets[i] = new Subset();
+            subsets[i].parent = i;
+            subsets[i].rank = 0;
+        }
 
-		}
+        int e = 0;
+        int i = 0;
+        while (e < localidades.size() - 1 && i < conexiones.size()) {
+            Conexion conexionActual = conexiones.get(i++);
+            int x = find(subsets, localidades.indexOf(conexionActual.getOrigen()));
+            int y = find(subsets, localidades.indexOf(conexionActual.getDestino()));
 
-		System.out.println("Following are the edges in " + 
-				"the constructed MST");
-		for (i = 0; i < e; ++i)
-			System.out.println(result[i].src+" -- " + 
-					result[i].dest+" == " + result[i].weight);
-	}
+            if (x != y) {
+                resultado.add(conexionActual);
+                union(subsets, x, y);
+                e++;
+            }
+        }
+
+        return resultado;
+    }
 }
+

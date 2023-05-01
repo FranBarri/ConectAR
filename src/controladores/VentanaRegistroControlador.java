@@ -3,8 +3,8 @@ package controladores;
 import java.awt.EventQueue;
 import java.util.List;
 
-import gSon.Localidad;
 import sistema.Geonames;
+import sistema.Localidad;
 import sistema.Registro;
 import visual.VentanaAuto;
 import visual.VentanaRegistroManual;

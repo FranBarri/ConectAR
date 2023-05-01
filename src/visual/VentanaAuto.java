@@ -8,7 +8,8 @@ import swing.PanelGradiente;
 import javax.imageio.ImageIO;
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
-import gSon.Localidad;
+import sistema.Localidad;
+
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

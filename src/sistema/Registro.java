@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 
 import gSon.GenerarGson;
 import gSon.ListaLocalidades;
-import gSon.Localidad;
 
 public class Registro {
     private static GenerarGson gsonGenerator = new GenerarGson();
