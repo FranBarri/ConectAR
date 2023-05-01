@@ -56,7 +56,7 @@ public class Conexion implements Comparable<Conexion> {
         return costo;
     }
 
-    private double calcularDistancia(double lat1, double lon1, double lat2, double lon2) {
+    public double calcularDistancia(double lat1, double lon1, double lat2, double lon2) {
     	// código para calcular la distancia entre dos puntos en la Tierra
         // usando la fórmula de Haversine
         double radioTierra = 6371; // en kilómetros
