@@ -8,9 +8,10 @@ public class Conexion implements Comparable<Conexion> {
     private double costoConAum;
     private double costoFijo;
 
-    public Conexion(Localidad origen, Localidad destino) {
+    public Conexion(Localidad origen, Localidad destino,double costoTotal) {
         this.origen = origen;
         this.destino = destino;
+        this.costoTotal=calcularCosto();
         
     }
 
