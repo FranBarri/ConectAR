@@ -243,7 +243,7 @@ public class VentanaMapa extends JFrame{
         		mapa.removeAllMapPolygons();
         		mapaAGM = mapa;
 //        		mapaAGM = DisenioMapa.mostrarAristas(mapaAGM, listaLocalidades);
-        		mapaAGM = DisenioMapa.mostrarAGM(mapaAGM, listaLocalidades, conexiones);
+        		mapaAGM = DisenioMapa.mostrarAGM(mapa, listaLocalidades, conexiones);
         		panelMapa.remove(mapa);
         		panelMapa.add(mapaAGM);
         		//Esta bien esta forma de mostrar los costos? O tendria que ser de forma individual?

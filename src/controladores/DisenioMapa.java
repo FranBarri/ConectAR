@@ -70,25 +70,28 @@ public class DisenioMapa {
 //		mapaRet.addMapPolygon(polygon);
 //		return mapaRet;
 //	}
+	
 	public static JMapViewer mostrarAGM(JMapViewer mapa, List<Localidad> localidades, List<Conexion> conexiones) {
 	    JMapViewer mapaRet = mapa;
 	    List<Conexion> result = Kruskal.arbolGeneradorMinimo(localidades, conexiones);
-	    ArrayList<Coordinate> coords = new ArrayList<Coordinate>();
-	    
+
 	    for (Conexion conex : result) {
-	        Coordinate coord1 = new Coordinate(conex.getDestino().getLatitud(), conex.getDestino().getLongitud());
-	        Coordinate coord2 = new Coordinate(conex.getOrigen().getLatitud(), conex.getOrigen().getLongitud());
-	        //A partir de las 4 localidades hace un ciclo entre la loc 2 y la ultima
-	        coords.add(coord1);
-	        coords.add(coord2);
-	    }	        
-	    MapPolygon polygon = new MapPolygonImpl(coords);
-	    polygon.getStyle().setBackColor(null);
-	    polygon.getStyle().setColor(Color.RED);
-	    mapaRet.addMapPolygon(polygon);
-	    
+	    	List<Coordinate> coords = new ArrayList<Coordinate>();
+	    	Localidad origen = conex.getOrigen();
+	    	Localidad destino = conex.getDestino();
+	    	coords.add(new Coordinate(origen.getLatitud(), origen.getLongitud()));
+	    	coords.add(new Coordinate(destino.getLatitud(), destino.getLongitud()));
+	    	coords.add(new Coordinate(origen.getLatitud(), origen.getLongitud())); //Cierra el poligono
+
+	    	MapPolygon polygon = new MapPolygonImpl(coords);
+	    	polygon.getStyle().setColor(Color.BLUE);
+	    	polygon.getStyle().setBackColor(null);
+	    	mapaRet.addMapPolygon(polygon);
+	    }
+
 	    return mapaRet;
 	}
+
 	public static double mostrarCostoTotal(List<Localidad> localidades, List<Conexion> conexiones) {
 		double ret = 0;
 	    List<Conexion> result = Kruskal.arbolGeneradorMinimo(localidades, conexiones);

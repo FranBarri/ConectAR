@@ -72,6 +72,13 @@ public class VentanaAuto extends JFrame{
 		panelGradiente1.setColorPrimario(new java.awt.Color(146, 233, 251));
         panelGradiente1.setColorSecundario(new java.awt.Color(12, 137, 163));
         
+        JLabel lblBienvenido = new JLabel("Bienvenido a ConectAR");
+        lblBienvenido.setHorizontalAlignment(SwingConstants.CENTER);
+        lblBienvenido.setForeground(new Color(255, 255, 255));
+        lblBienvenido.setFont(new Font("Tahoma", Font.BOLD, 60));
+        lblBienvenido.setBounds(10, 22, 864, 117);
+        panelGradiente1.add(lblBienvenido);
+        
         panelRegistro.setBackground(new java.awt.Color(255, 255, 255));
         
         getContentPane().add(panelGradiente1, BorderLayout.CENTER);
