@@ -7,7 +7,8 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
-import controladores.DisenioMapa;
+import controladores.DisenioVentanaMapa;
+import controladores.VentanaCostosControlador;
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
 import sistema.Conexion;
@@ -32,6 +33,7 @@ public class VentanaMapa extends JFrame{
 	private JMapViewer mapa;
 	private JMapViewer mapaAGM;
 	private JPanel panel;
+	private JButton btnDetalle;
 	private List<Localidad> listaLocalidades;
 	private List<Conexion> conexiones;
 	private ArrayList<MapMarker> marcas;
@@ -85,8 +87,8 @@ public class VentanaMapa extends JFrame{
         panelMapa.add(mapa);
         mapa.setZoomControlsVisible(false);
         Coordinate coord = new Coordinate(-33.416097, -63.616672);
-		DisenioMapa.crearVertices(marcas, listaLocalidades);
-        DisenioMapa.cargarVertices(mapa, marcas);
+		DisenioVentanaMapa.crearVertices(marcas, listaLocalidades);
+        DisenioVentanaMapa.cargarVertices(mapa, marcas);
         
         JLabel lblCostoTotal = new JLabel("Costo Total");
         lblCostoTotal.setHorizontalAlignment(SwingConstants.CENTER);
@@ -210,8 +212,8 @@ public class VentanaMapa extends JFrame{
         			marcas.clear();
         			mapa.removeAllMapPolygons();
         			mapa.removeAllMapMarkers();
-        			DisenioMapa.crearVertices(marcas, listaLocalidades);
-        			DisenioMapa.cargarVertices(mapa, marcas);        			
+        			DisenioVentanaMapa.crearVertices(marcas, listaLocalidades);
+        			DisenioVentanaMapa.cargarVertices(mapa, marcas);        			
         		}
         	}
         });
@@ -220,8 +222,8 @@ public class VentanaMapa extends JFrame{
         	public void actionPerformed(ActionEvent e) {
         		mapa.removeAllMapMarkers();
         		listaLocalidades = VentanaRegistroControlador.getLista();
-        		DisenioMapa.crearVertices(marcas, listaLocalidades);
-                DisenioMapa.cargarVertices(mapa, marcas);
+        		DisenioVentanaMapa.crearVertices(marcas, listaLocalidades);
+                DisenioVentanaMapa.cargarVertices(mapa, marcas);
         	}
         });
         
@@ -239,23 +241,23 @@ public class VentanaMapa extends JFrame{
         btnCalcular.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		cambios = true;
-        		conexiones = DisenioMapa.crearConexiones(listaLocalidades);
+        		conexiones = DisenioVentanaMapa.crearConexiones(listaLocalidades);
         		mapa.removeAllMapPolygons();
         		mapaAGM = mapa;
 //        		mapaAGM = DisenioMapa.mostrarAristas(mapaAGM, listaLocalidades);
-        		mapaAGM = DisenioMapa.mostrarAGM(mapa, listaLocalidades, conexiones);
+        		mapaAGM = DisenioVentanaMapa.mostrarAGM(mapa, listaLocalidades, conexiones);
         		panelMapa.remove(mapa);
         		panelMapa.add(mapaAGM);
         		//Esta bien esta forma de mostrar los costos? O tendria que ser de forma individual?
         		DecimalFormat df = new DecimalFormat("#.##");
-        		lblPrecioKM.setText("$ " + df.format(DisenioMapa.mostrarCostoPorKM(listaLocalidades, conexiones)));
-        		lblPrecioPorcentaje.setText("$ " + df.format(DisenioMapa.mostrarCostoConAumento(listaLocalidades, conexiones)));
-        		lblPrecioCambio.setText("$ " + df.format(DisenioMapa.mostrarCostoFijo(listaLocalidades, conexiones)));
-        		lblPrecioTotal.setText("$ " + df.format(DisenioMapa.mostrarCostoTotal(listaLocalidades, conexiones)));
+        		lblPrecioKM.setText("$ " + df.format(DisenioVentanaMapa.mostrarCostoPorKM(listaLocalidades, conexiones)));
+        		lblPrecioPorcentaje.setText("$ " + df.format(DisenioVentanaMapa.mostrarCostoConAumento(listaLocalidades, conexiones)));
+        		lblPrecioCambio.setText("$ " + df.format(DisenioVentanaMapa.mostrarCostoFijo(listaLocalidades, conexiones)));
+        		lblPrecioTotal.setText("$ " + df.format(DisenioVentanaMapa.mostrarCostoTotal(listaLocalidades, conexiones)));
         		
+        		aniadirBtnDetalle();
         	}
         });
-
 	}
 	private void agregarExito(String mensaje) {
         panel = new JPanel();
@@ -275,5 +277,21 @@ public class VentanaMapa extends JFrame{
             panel.setBounds(20, 502, 180, 20);
         	textArea.setText("¡Mapa guardado con éxito!");
         }
+	}
+	private void aniadirBtnDetalle() {
+		btnDetalle = new JButton("Detalle");
+        btnDetalle.setForeground(Color.BLACK);
+        btnDetalle.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnDetalle.setBackground(Color.LIGHT_GRAY);
+        btnDetalle.setBounds(716, 525, 73, 24);
+        panelGradiente1.add(btnDetalle);
+        btnDetalle.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        btnDetalle.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		VentanaCostosControlador.mostrar();
+        		VentanaMapaControlador.cerrar();
+        	}
+        });
 	}
 }

@@ -15,7 +15,7 @@ import sistema.Conexion;
 import sistema.Kruskal;
 import sistema.Localidad;
 
-public class DisenioMapa {
+public class DisenioVentanaMapa {
 
 	public static void crearVertices(ArrayList<MapMarker> marcas, List<Localidad> localidades) {
 	    for (Localidad localidad : localidades) {
