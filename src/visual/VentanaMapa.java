@@ -11,6 +11,7 @@ import controladores.DisenioVentanaMapa;
 import controladores.VentanaCostosControlador;
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
+import gSon.ListaLocalidades;
 import sistema.Conexion;
 import sistema.Localidad;
 import swing.PanelGradiente;
@@ -34,7 +35,7 @@ public class VentanaMapa extends JFrame{
 	private JMapViewer mapaAGM;
 	private JPanel panel;
 	private JButton btnDetalle;
-	private List<Localidad> listaLocalidades;
+	private static List<Localidad> listaLocalidades;
 	private List<Conexion> conexiones;
 	private ArrayList<MapMarker> marcas;
 	private boolean cambios;
@@ -295,5 +296,8 @@ public class VentanaMapa extends JFrame{
         		VentanaMapaControlador.cerrar();
         	}
         });
+	}
+	public static List<Localidad> getLista() {
+		return listaLocalidades;
 	}
 }

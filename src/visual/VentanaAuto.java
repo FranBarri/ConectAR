@@ -138,11 +138,12 @@ public class VentanaAuto extends JFrame{
             }
         });
         
-        //Cuando vuelvo a registrar despues de ir y volver del mapa, el Txtfield se queda en ""
+        //
         btnRegistrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnRegistrar.setToolTipText("Registra la primer localidad encontrada");
         btnRegistrar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		listaLocalidades = VentanaMapa.getLista();
         		localidad = usrLocalidad.getText();
         		panelRegistro.remove(lblExito);
         		if (!localidad.isBlank()) {
