@@ -190,12 +190,12 @@ public class VentanaMapa extends JFrame{
 
         btnRegistro.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		if (cambios) {
-        			JOptionPane.showMessageDialog(null, "No puedes registrar nuevas localidades luego de calcular el costo.");
-        		} else {
+//        		if (cambios) {
+//        			JOptionPane.showMessageDialog(null, "No puedes registrar nuevas localidades luego de calcular el costo.");
+//        		} else {
         			VentanaRegistroControlador.mostrarAuto();
         			VentanaMapaControlador.cerrar();
-        		}
+//        		}
         	}
         });  
         

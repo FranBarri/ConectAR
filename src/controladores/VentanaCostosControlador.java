@@ -32,7 +32,7 @@ public class VentanaCostosControlador {
 	}
 	
 	public static void mostrar() {
-		ventanaCostos.initialize();
+//		ventanaCostos.initialize();
 		ventanaCostos.setVisible(true);
 	}
 	

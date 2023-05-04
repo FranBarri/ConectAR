@@ -33,7 +33,7 @@ public class VentanaCostos extends JFrame {
     private static DefaultTableModel modelo;
 	private File imagen;
 	private Image icono;
-    private static int filasPorPagina = 10;
+    private static int filasPorPagina = 30;
     private static int paginaActual = 0;
 
     public VentanaCostos() {
@@ -76,7 +76,7 @@ public class VentanaCostos extends JFrame {
         modelo = new DefaultTableModel(columnas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                // Aquí se define si la celda es editable o no
+                // Aca se define si la celda es editable o no
                 return false;
             }
         };
@@ -86,6 +86,7 @@ public class VentanaCostos extends JFrame {
         Font font = new Font("Tahoma", Font.BOLD, 12);
         tabla.getTableHeader().setFont(font);
         tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tabla.getTableHeader().setReorderingAllowed(false);
         JScrollPane scrollPane = new JScrollPane(tabla);
         scrollPane.setBounds(10, 11, 864, 490);
 
