@@ -214,6 +214,7 @@ public class VentanaMapa extends JFrame{
         			mapa.removeAllMapMarkers();
         			DisenioVentanaMapa.crearVertices(marcas, listaLocalidades);
         			DisenioVentanaMapa.cargarVertices(mapa, marcas);        			
+        			conexiones = DisenioVentanaMapa.crearConexiones(listaLocalidades);
         		}
         	}
         });
@@ -248,14 +249,15 @@ public class VentanaMapa extends JFrame{
         		mapaAGM = DisenioVentanaMapa.mostrarAGM(mapa, listaLocalidades, conexiones);
         		panelMapa.remove(mapa);
         		panelMapa.add(mapaAGM);
-        		//Esta bien esta forma de mostrar los costos? O tendria que ser de forma individual?
         		DecimalFormat df = new DecimalFormat("#.##");
-        		lblPrecioKM.setText("$ " + df.format(DisenioVentanaMapa.mostrarCostoPorKM(listaLocalidades, conexiones)));
-        		lblPrecioPorcentaje.setText("$ " + df.format(DisenioVentanaMapa.mostrarCostoConAumento(listaLocalidades, conexiones)));
-        		lblPrecioCambio.setText("$ " + df.format(DisenioVentanaMapa.mostrarCostoFijo(listaLocalidades, conexiones)));
-        		lblPrecioTotal.setText("$ " + df.format(DisenioVentanaMapa.mostrarCostoTotal(listaLocalidades, conexiones)));
+        		lblPrecioKM.setText("$ " + df.format(VentanaCostosControlador.mostrarCostoPorKM(listaLocalidades, conexiones)));
+        		lblPrecioPorcentaje.setText("$ " + df.format(VentanaCostosControlador.mostrarCostoConAumento(listaLocalidades, conexiones)));
+        		lblPrecioCambio.setText("$ " + df.format(VentanaCostosControlador.mostrarCostoFijo(listaLocalidades, conexiones)));
+        		lblPrecioTotal.setText("$ " + df.format(VentanaCostosControlador.mostrarCostoTotal(listaLocalidades, conexiones)));
         		
         		aniadirBtnDetalle();
+        		//Las conexiones no se eliminan cuando elimino una localdad????
+        		VentanaCostosControlador.actualizarTabla(listaLocalidades, conexiones);
         	}
         });
 	}

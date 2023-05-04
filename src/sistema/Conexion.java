@@ -4,6 +4,7 @@ public class Conexion implements Comparable<Conexion> {
 	private Localidad origen;
     private Localidad destino;
     private double costoTotal;
+    private double distancia;
     private double costoPorKM;
     private double costoConAum;
     private double costoFijo;
@@ -25,6 +26,9 @@ public class Conexion implements Comparable<Conexion> {
     public double getCostoTotal() {
     	return costoTotal;
     }
+    public double getDistancia() {
+    	return distancia;
+    }
     
     public double getCostoPorKM() {
     	return costoPorKM;
@@ -43,7 +47,7 @@ public class Conexion implements Comparable<Conexion> {
     	double costoPorKilometro = 5.0;
     	costoFijo = 0;
     	costoConAum = 0;
-        double distancia = calcularDistancia(origen.getLatitud(), origen.getLongitud(), destino.getLatitud(), destino.getLongitud());
+        distancia = calcularDistancia(origen.getLatitud(), origen.getLongitud(), destino.getLatitud(), destino.getLongitud());
         double costo = distancia * costoPorKilometro;
         costoPorKM = costo;
         if (!origen.getProvincia().equals(destino.getProvincia())) {

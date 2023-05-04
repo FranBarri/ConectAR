@@ -84,44 +84,11 @@ public class DisenioVentanaMapa {
 	    	coords.add(new Coordinate(origen.getLatitud(), origen.getLongitud())); //Cierra el poligono
 
 	    	MapPolygon polygon = new MapPolygonImpl(coords);
-	    	polygon.getStyle().setColor(Color.BLUE);
+	    	polygon.getStyle().setColor(Color.RED);
 	    	polygon.getStyle().setBackColor(null);
 	    	mapaRet.addMapPolygon(polygon);
 	    }
 
 	    return mapaRet;
-	}
-
-	public static double mostrarCostoTotal(List<Localidad> localidades, List<Conexion> conexiones) {
-		double ret = 0;
-	    List<Conexion> result = Kruskal.arbolGeneradorMinimo(localidades, conexiones);
-	    for (Conexion conex : result) {
-	    	ret += conex.getCostoTotal();
-	    }
-	    return ret;
-	}
-	public static double mostrarCostoConAumento(List<Localidad> localidades, List<Conexion> conexiones) {
-		double ret = 0;
-	    List<Conexion> result = Kruskal.arbolGeneradorMinimo(localidades, conexiones);
-	    for (Conexion conex : result) {
-	    	ret += conex.getCostoConAum();
-	    }
-	    return ret;
-	}
-	public static double mostrarCostoFijo(List<Localidad> localidades, List<Conexion> conexiones) {
-		double ret = 0;
-	    List<Conexion> result = Kruskal.arbolGeneradorMinimo(localidades, conexiones);
-	    for (Conexion conex : result) {
-	    	ret += conex.getCostoFijo();
-	    }
-	    return ret;
-	}
-	public static double mostrarCostoPorKM(List<Localidad> localidades, List<Conexion> conexiones) {
-		double ret = 0;
-	    List<Conexion> result = Kruskal.arbolGeneradorMinimo(localidades, conexiones);
-	    for (Conexion conex : result) {
-	    	ret += conex.getCostoPorKM();
-	    }
-	    return ret;
 	}
 }
