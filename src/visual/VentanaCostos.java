@@ -33,9 +33,7 @@ public class VentanaCostos extends JFrame {
     private static DefaultTableModel modelo;
 	private File imagen;
 	private Image icono;
-    private static int filasPorPagina = 30;
-    private static int paginaActual = 0;
-
+    private static int filasPorPagina = 100;
     public VentanaCostos() {
     	initialize();
     }
@@ -43,7 +41,6 @@ public class VentanaCostos extends JFrame {
     public void initialize() {
 		setBounds(100, 100, 900, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//Cargar icono y titulo de ventana
 		try {
 			imagen = new File("imagenes\\icono.png");
 			icono = ImageIO.read(imagen);
@@ -85,7 +82,6 @@ public class VentanaCostos extends JFrame {
         tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         Font font = new Font("Tahoma", Font.BOLD, 12);
         tabla.getTableHeader().setFont(font);
-        tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         tabla.getTableHeader().setReorderingAllowed(false);
         JScrollPane scrollPane = new JScrollPane(tabla);
         scrollPane.setBounds(10, 11, 864, 490);
@@ -106,9 +102,11 @@ public class VentanaCostos extends JFrame {
         // Obtener la lista de localidades, conexiones y generar AGM
     	modelo.setRowCount(0); // reincio las localidades
         List<Conexion> conex = Kruskal.arbolGeneradorMinimo(localidades, conexiones);
-        int inicio = paginaActual * filasPorPagina;
-        int fin = Math.min((paginaActual + 1) * filasPorPagina, conex.size());
-        for (int i = inicio; i < fin; i++) {
+	    if (conex == null) {
+	    	return;
+	    }
+        int fin = Math.min(filasPorPagina, conex.size());
+        for (int i = 0; i < fin; i++) {
     		DecimalFormat df = new DecimalFormat("#.##");
             Conexion conexion = conex.get(i);
             modelo.addRow(new Object[]{i, conexion.getDestino().getNombre(), conexion.getOrigen().getNombre(), 

@@ -39,11 +39,9 @@ public class VentanaRegistroControlador {
 		ventanaAuto.setVisible(false);
 	}
 	public static void mostrarManual() {
-//		ventanaRegistroManual.initialize();
 		ventanaRegistroManual.setVisible(true);
 	}
 	public static void mostrarAuto() {
-//		ventanaAuto.initialize();
 		ventanaAuto.setVisible(true);
 	}
 	public static Localidad generarLocalidad(String nombre, String provincia, double latitud, double longitud) {

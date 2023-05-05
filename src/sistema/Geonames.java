@@ -11,11 +11,11 @@ import org.geonames.WebService;
 
 public class Geonames {
 	public static Localidad buscarPorNombre(String nombre) throws InvalidParameterException {
-		WebService.setUserName("franbarri");
+		WebService.setUserName("franbarri"); //Nombre de mi cuenta para poder acceder a la API de Geonames
 		ToponymSearchCriteria searchCriteria = new ToponymSearchCriteria();
-		searchCriteria.setQ(nombre);
-		searchCriteria.setCountryCode("AR");
-		searchCriteria.setStyle(Style.FULL);
+		searchCriteria.setQ(nombre); //Busca la localidad por nombre
+		searchCriteria.setCountryCode("AR"); //Seteo para que solo busque en Argentina
+		searchCriteria.setStyle(Style.FULL); //Me muestra la provincia de la localidad
 		ToponymSearchResult searchResult;
 		try {
 			searchResult = WebService.search(searchCriteria);

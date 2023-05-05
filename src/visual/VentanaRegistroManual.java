@@ -56,7 +56,6 @@ public class VentanaRegistroManual extends JFrame{
 		listaLocalidades = VentanaRegistroControlador.getLista();
 		setBounds(100, 100, 900, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//Cargar icono y titulo de ventana
 		try {
 			imagen = new File("imagenes\\icono.png");
 			icono = ImageIO.read(imagen);
@@ -65,7 +64,7 @@ public class VentanaRegistroManual extends JFrame{
 			System.out.println("Error cargando imagen: " + e.getMessage());
 		}
 		setTitle("ConectAR");
-		setLocationRelativeTo(null); //Centra la ventana en pantalla
+		setLocationRelativeTo(null);
 		setResizable(false);
 		
 		panelGradiente1 = new swing.PanelGradiente();

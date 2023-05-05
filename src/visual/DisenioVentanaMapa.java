@@ -1,4 +1,4 @@
-package controladores;
+package visual;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -53,28 +53,14 @@ public class DisenioVentanaMapa {
 		}
 		return conexiones;
 	}
-//	public static JMapViewer mostrarAristas(JMapViewer mapa, List<Localidad> localidades) {
-//		JMapViewer mapaRet = mapa;
-//		ArrayList<Coordinate> coords = new ArrayList<>();
-//		for (Localidad origen : localidades) {
-//			for (Localidad destino : localidades) {
-//				if (origen != destino) {
-//					coords.add(new Coordinate(origen.getLatitud(), origen.getLongitud()));
-//					coords.add(new Coordinate(destino.getLatitud(), destino.getLongitud()));
-//				}
-//			}
-//		}
-//		MapPolygon polygon = new MapPolygonImpl(coords);
-//		polygon.getStyle().setBackColor(null);
-//		polygon.getStyle().setColor(Color.BLUE);
-//		mapaRet.addMapPolygon(polygon);
-//		return mapaRet;
-//	}
 	
-	public static JMapViewer mostrarAGM(JMapViewer mapa, List<Localidad> localidades, List<Conexion> conexiones) {
-	    JMapViewer mapaRet = mapa;
+	public static void mostrarAGM(JMapViewer mapa, List<Localidad> localidades, List<Conexion> conexiones) {
 	    List<Conexion> result = Kruskal.arbolGeneradorMinimo(localidades, conexiones);
 
+	    if (result == null) {
+	    	return;
+	    }
+	    
 	    for (Conexion conex : result) {
 	    	List<Coordinate> coords = new ArrayList<Coordinate>();
 	    	Localidad origen = conex.getOrigen();
@@ -86,9 +72,7 @@ public class DisenioVentanaMapa {
 	    	MapPolygon polygon = new MapPolygonImpl(coords);
 	    	polygon.getStyle().setColor(Color.RED);
 	    	polygon.getStyle().setBackColor(null);
-	    	mapaRet.addMapPolygon(polygon);
+	    	mapa.addMapPolygon(polygon);
 	    }
-
-	    return mapaRet;
 	}
 }

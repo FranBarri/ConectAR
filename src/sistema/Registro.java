@@ -6,6 +6,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import com.google.gson.Gson;
 
 import gSon.GenerarGson;
@@ -27,13 +29,20 @@ public class Registro {
 	}
 	
 	public static List<Localidad> eliminarLocalidad(String localidad) {
+	    boolean encontrada = false;
 	    List<Localidad> ret = new ArrayList<>();
 	    for (Localidad local : listaLocs) {
-	        if (!local.getNombre().toLowerCase().contains(localidad.toLowerCase()) || localidad.isBlank()) {
+	        if (local.getNombre().equalsIgnoreCase(localidad.trim())) {
+	            encontrada = true;
+	        } else {
 	            ret.add(local);
 	        }
 	    }
 	    listaLocs = ret;
+	    if (!encontrada && !listaLocs.isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "La localidad no se encontró en la lista");
+	        return listaLocs;
+	    }
 	    return ret;
 	}
 	

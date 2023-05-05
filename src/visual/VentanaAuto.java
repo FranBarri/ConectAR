@@ -138,7 +138,6 @@ public class VentanaAuto extends JFrame{
             }
         });
         
-        //
         btnRegistrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnRegistrar.setToolTipText("Registra la primer localidad encontrada");
         btnRegistrar.addActionListener(new ActionListener() {

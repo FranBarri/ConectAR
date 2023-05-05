@@ -7,11 +7,9 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
-import controladores.DisenioVentanaMapa;
 import controladores.VentanaCostosControlador;
 import controladores.VentanaMapaControlador;
 import controladores.VentanaRegistroControlador;
-import gSon.ListaLocalidades;
 import sistema.Conexion;
 import sistema.Localidad;
 import swing.PanelGradiente;
@@ -32,13 +30,11 @@ import swing.PanelBorder;
 public class VentanaMapa extends JFrame{
 	private PanelGradiente panelGradiente1;
 	private JMapViewer mapa;
-	private JMapViewer mapaAGM;
 	private JPanel panel;
 	private JButton btnDetalle;
 	private static List<Localidad> listaLocalidades;
 	private List<Conexion> conexiones;
 	private ArrayList<MapMarker> marcas;
-	private boolean cambios;
 	private String mensaje;
 	private File imagen;
 	private Image icono;
@@ -51,13 +47,10 @@ public class VentanaMapa extends JFrame{
 		listaLocalidades = VentanaRegistroControlador.getLista();
 		marcas = new ArrayList<MapMarker>();
 		conexiones = new ArrayList<Conexion>();
-		cambios = false;
 		mensaje = "";
-//		aristas = new ArrayList<MapPolygon>();
 		setBounds(100, 100, 900, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
-		//Cargar icono y titulo de ventana
 		try {
 			imagen = new File("imagenes\\icono.png");
 			icono = ImageIO.read(imagen);
@@ -66,7 +59,7 @@ public class VentanaMapa extends JFrame{
 			System.out.println("Error cargando imagen: " + e.getMessage());
 		}
 		setTitle("ConectAR");
-		setLocationRelativeTo(null); //Centra la ventana en pantalla
+		setLocationRelativeTo(null); 
 		setResizable(false);
 		
 		panelGradiente1 = new swing.PanelGradiente();
@@ -191,12 +184,8 @@ public class VentanaMapa extends JFrame{
 
         btnRegistro.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-//        		if (cambios) {
-//        			JOptionPane.showMessageDialog(null, "No puedes registrar nuevas localidades luego de calcular el costo.");
-//        		} else {
         			VentanaRegistroControlador.mostrarAuto();
         			VentanaMapaControlador.cerrar();
-//        		}
         	}
         });  
         
@@ -207,8 +196,6 @@ public class VentanaMapa extends JFrame{
         			if (!mensaje.isBlank()) {
         				panelGradiente1.remove(panel);
         			}
-        			mensaje = "eliminado";
-        			agregarExito(mensaje);
         			listaLocalidades = VentanaRegistroControlador.eliminarLocalidad(localidadAEliminar);
         			marcas.clear();
         			mapa.removeAllMapPolygons();
@@ -235,21 +222,16 @@ public class VentanaMapa extends JFrame{
         			panelGradiente1.remove(panel);
         		}
         		mensaje = "guardado";
-        		agregarExito(mensaje);
+        		agregarExito();
         		VentanaRegistroControlador.guardarJson(listaLocalidades);
         	}
         });
         
         btnCalcular.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		cambios = true;
         		conexiones = DisenioVentanaMapa.crearConexiones(listaLocalidades);
         		mapa.removeAllMapPolygons();
-        		mapaAGM = mapa;
-//        		mapaAGM = DisenioMapa.mostrarAristas(mapaAGM, listaLocalidades);
-        		mapaAGM = DisenioVentanaMapa.mostrarAGM(mapa, listaLocalidades, conexiones);
-        		panelMapa.remove(mapa);
-        		panelMapa.add(mapaAGM);
+        		DisenioVentanaMapa.mostrarAGM(mapa, listaLocalidades, conexiones);
         		DecimalFormat df = new DecimalFormat("#.##");
         		lblPrecioKM.setText("$ " + df.format(VentanaCostosControlador.mostrarCostoPorKM(listaLocalidades, conexiones)));
         		lblPrecioPorcentaje.setText("$ " + df.format(VentanaCostosControlador.mostrarCostoConAumento(listaLocalidades, conexiones)));
@@ -257,29 +239,22 @@ public class VentanaMapa extends JFrame{
         		lblPrecioTotal.setText("$ " + df.format(VentanaCostosControlador.mostrarCostoTotal(listaLocalidades, conexiones)));
         		
         		aniadirBtnDetalle();
-        		//Las conexiones no se eliminan cuando elimino una localdad????
         		VentanaCostosControlador.actualizarTabla(listaLocalidades, conexiones);
         	}
         });
 	}
-	private void agregarExito(String mensaje) {
+	private void agregarExito() {
         panel = new JPanel();
-        panel.setBounds(20, 502, 200, 20);
+        panel.setBounds(20, 502, 180, 20);
         panelGradiente1.add(panel);
         panel.setLayout(null);
         
         JTextArea textArea = new JTextArea();
-        textArea.setBounds(0, 0, 280, 20);
+        textArea.setBounds(0, 0, 180, 20);
 		textArea.setFont(new Font("Tahoma", Font.PLAIN, 15));
         textArea.setEditable(false);
         panel.add(textArea);
-        if (mensaje == "eliminado") {
-        	textArea.setText("¡Localidad eliminada con éxito!");
-        }
-        if (mensaje == "guardado") {
-            panel.setBounds(20, 502, 180, 20);
-        	textArea.setText("¡Mapa guardado con éxito!");
-        }
+        textArea.setText("¡Mapa guardado con éxito!");
 	}
 	private void aniadirBtnDetalle() {
 		btnDetalle = new JButton("Detalle");

@@ -31,9 +31,12 @@ public class Kruskal {
         }
     }
     
-    //Usar este metodo para el boton calcular
     public static List<Conexion> arbolGeneradorMinimo(List<Localidad> localidades, List<Conexion> conexiones) {
-        List<Conexion> resultado = new ArrayList<>();
+        if (localidades.isEmpty() || conexiones.isEmpty()) {
+        	return null;
+        }
+    	
+    	List<Conexion> resultado = new ArrayList<>();
 
         conexiones.sort(Comparator.comparingDouble(Conexion::calcularCosto));
 
