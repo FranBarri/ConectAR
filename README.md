@@ -18,11 +18,9 @@
 	<h2>Calculation of Distance and Cost between Edges</h2>
 	<p>The distance between edges in a weighted graph refers to the weight of the edge, which indicates the cost or distance between two vertices connected by the edge. In the solution presented in this project, the Conexion class is used to represent an edge, which has an origin location, a destination location, and a cost. The calcularDistancia and calcularCosto methods of the Conexion class are responsible for calculating the distance between two edges and the cost of the connection. These two methods solve it as follows.</p>
 	<ul>
-		<li>calcularDistancia: calculates the distance in kilometers from both locations
-
-ChatGPT
-using the Haversine formula, which takes into account the curvature of the Earth. This formula takes the latitude and longitude of both locations and calculates the distance between them. The result is returned in kilometers.</li>
-<li>calcularCosto: calculates the cost of the connection using the distance calculated by the calcularDistancia method. If the distance is less than or equal to 300 km, the cost per kilometer is $10. If the distance is greater than 300 km, the cost per kilometer is $20. If the origin and destination locations are in different provinces, an additional fixed cost of $500 is added to the total cost.</li>
+	<li>calcularDistancia: calculates the distance in kilometers from both locations
+	using the Haversine formula, which takes into account the curvature of the Earth. This formula takes the latitude and longitude of both locations and 		calculates the distance between them. The result is returned in kilometers.</li>
+	<li>calcularCosto: calculates the cost of the connection using the distance calculated by the calcularDistancia method. If the distance is less than or equal 		to 300 km, the cost per kilometer is $10. If the distance is greater than 300 km, the cost per kilometer is $20. If the origin and destination locations are 		in different provinces, an additional fixed cost of $500 is added to the total cost.</li>
 </ul>
 <h2>Kruskal's Algorithm</h2>
 <p>Kruskal's algorithm is a greedy algorithm that finds a minimum spanning tree for a connected weighted graph. The minimum spanning tree is the subgraph of the original graph that contains all the vertices and the minimum possible weight or cost. In the case of this project, the vertices are the locations and the edges are the connections between them, whose weights are the costs calculated by the calcularCosto method of the Conexion class. Kruskal's algorithm starts by sorting the edges in ascending order of their weights, and then iteratively adds the edges with the lowest weight that do not form a cycle until all vertices are included. This algorithm is implemented in the Grafo class, which creates the minimum spanning tree and returns it as a set of Conexion objects.</p>
