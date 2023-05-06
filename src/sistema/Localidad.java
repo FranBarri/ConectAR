@@ -1,4 +1,4 @@
-package gSon;
+package sistema;
 
 public class Localidad {
 	private String nombre;
