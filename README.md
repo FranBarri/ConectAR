@@ -2,9 +2,6 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Project Report</title>
-</head>
 <body>
 	<h1>Telephone Connections Planner</h1>
 	<p>This project presents an application for planning telephone connections between locations located in depopulated regions. To do this, we find the minimum spanning tree of a graph whose vertices are the locations and the edges are the connections between cities, this was possible thanks to the Kruskal's algorithm. In addition, it describes how the distance between connections is calculated and how the algorithm is implemented.</p>
